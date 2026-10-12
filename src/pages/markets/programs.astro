@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { programs } from '../../data/markets';
 import { marketLinks } from '../../data/sections';
 const legacy = programs.flatMap((g) => g.legacy ?? []);
@@ -12,7 +11,7 @@ const legacy = programs.flatMap((g) => g.legacy ?? []);
   <SectionNav label="Markets" links={marketLinks} />
   <section class="section section--paper">
     <div class="wrap">
-      <p class="lede">Program list as published on our previous site.<Confirm id="programs" /></p>
+      <p class="lede">Military and commercial programs, fixed-wing and rotorcraft.</p>
       <div class="prog">
         {programs.map((g) => (
           <section aria-labelledby={`g-${g.group}`}>

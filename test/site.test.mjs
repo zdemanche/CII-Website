@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { dist, base, demo, walk, read, rel, pages, strip, resolves, isStub } from './helpers.mjs';
 
 const expected = ['/', '/capabilities/', '/capabilities/materials/', '/capabilities/engineering/', '/capabilities/finishing/',
-  '/markets/', '/markets/aircraft/', '/markets/defense/', '/markets/turbine-engine/', '/markets/industrial/', '/markets/programs/',
+  '/markets/', '/markets/aircraft/', '/markets/defense/', '/markets/turbine-engine/', '/markets/industrial/', '/markets/transportation/', '/markets/programs/',
   '/quality/', '/company/', '/company/news/', '/careers/', '/contact/', '/privacy/', '/terms/', '/export-control/', '/sitemap/'];
 
 test('build output exists (FR-012)', () => assert.ok(existsSync(join(dist, 'index.html')), 'run `npm run build` first'));
@@ -135,12 +135,12 @@ test('demo vs production indexing (FR-011)', () => {
     assert.match(robots, /Disallow: \//);
     assert.match(home, /<meta name="robots" content="noindex/);
     assert.ok(checklist, 'demo needs launch checklist');
-    assert.match(home, /data-confirm=/, 'demo shows confirm markers');
+    assert.match(home, /launch-checklist\//, 'demo links the launch checklist');
   } else {
     assert.match(robots, /Allow: \/[\s\S]*Sitemap:/);
     assert.ok(!/<meta name="robots"/.test(home), 'production home must be indexable');
     assert.ok(!checklist, 'checklist must not ship to production');
-    assert.ok(!/data-confirm=/.test(home), 'production must not show confirm markers');
+    assert.ok(!/demo-bar/.test(home), 'production must not show the preview banner');
   }
 });
 

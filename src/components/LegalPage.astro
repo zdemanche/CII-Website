@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHeader from './PageHeader.astro';
-import Confirm from './Confirm.astro';
 interface Props { title: string; description: string }
 const { title, description } = Astro.props;
 ---
@@ -9,7 +8,6 @@ const { title, description } = Astro.props;
   <PageHeader title={title} />
   <section class="section section--paper">
     <div class="wrap">
-      <p class="note">Draft for review by Consolidated Industries and counsel. Not yet in effect.<Confirm id="legal" /></p>
       <div class="prose"><slot /></div>
     </div>
   </section>

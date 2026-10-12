@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { presses, hammers, limits } from '../../data/capabilities';
 import { capabilityLinks } from '../../data/sections';
 import { url } from '../../lib/url';
@@ -15,14 +14,14 @@ import { url } from '../../lib/url';
     <div class="wrap split">
       <div class="section-head">
         <h2 id="eq">Equipment</h2>
-        <p>Hammers handle steels, nickel alloys and titanium; presses handle aluminum and copper-base alloys. Cold trim presses remove flash after forging.<Confirm id="equipment" /></p>
+        <p>Hammers handle steels, nickel alloys and titanium; presses handle aluminum and copper-base alloys. Cold trim presses remove flash after forging.</p>
       </div>
       <div class="table-scroll">
         <table class="spec">
           <caption class="visually-hidden">Forging and trim equipment</caption>
           <thead><tr><th scope="col">Equipment</th><th scope="col" class="num">Capacity</th></tr></thead>
           <tbody>
-            <tr><th scope="row">{hammers.kind}</th><td class="num" data-label="Capacity">{hammers.range}<Confirm id="hammer-unit" /></td></tr>
+            <tr><th scope="row">{hammers.kind}</th><td class="num" data-label="Capacity">{hammers.range}</td></tr>
             {presses.map((p) => <tr><th scope="row">{p.kind}</th><td class="num" data-label="Capacity">{p.tons.toLocaleString('en-US')} tons</td></tr>)}
           </tbody>
         </table>
@@ -33,7 +32,7 @@ import { url } from '../../lib/url';
   <section class="section" aria-labelledby="lim">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="lim">Size limits by material<Confirm id="max-weight" /></h2>
+        <h2 id="lim">Size limits by material</h2>
         <p>Plan-view area is the footprint of the forging seen from above the die. Parts near a limit are often still possible: send us the envelope and we will check.</p>
         <p><a href={url('/contact/#rfq')}>Ask about a part</a></p>
       </div>

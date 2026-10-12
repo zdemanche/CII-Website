@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { news } from '../../data/news';
 import { companyLinks } from '../../data/sections';
 const sorted = [...news].sort((a, b) => b.date.localeCompare(a.date));
@@ -13,7 +12,7 @@ const fmt = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString('en-US'
   <SectionNav label="Company" links={companyLinks} />
   <section class="section section--paper">
     <div class="wrap">
-      <p class="note">News updates resume with the launch of this site. Earlier items are kept below as an archive.<Confirm id="news" /></p>
+      <p class="note">News updates resume with the launch of this site. Earlier items are kept below as an archive.</p>
       {sorted.length === 0 ? <p>No news yet.</p> : (
         <ol class="news">
           {sorted.map((n) => (

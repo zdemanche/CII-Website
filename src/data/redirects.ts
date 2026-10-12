@@ -14,7 +14,7 @@ export const redirects: Record<string, string> = {
   '/products-aircraft-forgings.php': '/markets/aircraft/',
   '/products-military-forgings.php': '/markets/defense/',
   '/products-turbine-engine-forgings.php': '/markets/turbine-engine/',
-  '/products-transportation-industry-forgings.php': '/markets/industrial/',
+  '/products-transportation-industry-forgings.php': '/markets/transportation/',
   '/products-industrial-commercial-forgings.php': '/markets/industrial/',
   '/aircraft-programs-served.php': '/markets/programs/',
   '/news-forging-industry.php': '/company/news/',

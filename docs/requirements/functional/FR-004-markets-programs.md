@@ -58,3 +58,7 @@ Each market page SHALL link to Capabilities and to the RFQ form, and the markets
 | Sub-req | Test file | Source reference |
 |---------|-----------|-----------------|
 | FR-004.1-.5 | test/markets.test.mjs (planned) | src/data/markets.ts, src/data/programs.ts (planned) |
+
+## Addendum (2026-10-12)
+- Transportation is its own page again (`/markets/transportation/`) now that its copy was recovered from the legacy site; industrial/commercial keeps `/markets/industrial/`. Turbine engine and industrial copy also recovered. Legacy redirects updated.
+- Per project owner, facts from the legacy site are treated as confirmed; per-fact confirm markers removed. `/launch-checklist/` now lists go-live tasks only.

@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import Confirm from '../../components/Confirm.astro';
 import { certifications, approvals, documents } from '../../data/quality';
 import { company } from '../../data/company';
 import { url } from '../../lib/url';
@@ -12,7 +11,7 @@ import { url } from '../../lib/url';
   <section class="section section--paper" aria-labelledby="certs">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="certs">Certifications<Confirm id="certs" /></h2>
+        <h2 id="certs">Certifications</h2>
         <p>Current certificates are available on request and will be posted here for download.</p>
       </div>
       <div class="table-scroll">
@@ -21,11 +20,11 @@ import { url } from '../../lib/url';
           <thead><tr><th scope="col">Certification</th><th scope="col">Scope</th><th scope="col">Issued by</th></tr></thead>
           <tbody>
             {certifications.map((c) => (
-              <tr><th scope="row">{c.name}{c.name.includes('Nondestructive') && <Confirm id="nadcap-ut" />}</th><td data-label="Scope">{c.scope}</td><td data-label="Issued by">{c.issuer}</td></tr>
+              <tr><th scope="row">{c.name}</th><td data-label="Scope">{c.scope}</td><td data-label="Issued by">{c.issuer}</td></tr>
             ))}
           </tbody>
         </table>
-        <p class="small">We also meet most MIL and NAS specifications.<Confirm id="specs" /></p>
+        <p class="small">We also meet most MIL and NAS specifications.</p>
       </div>
     </div>
   </section>
@@ -33,7 +32,7 @@ import { url } from '../../lib/url';
   <section class="section" aria-labelledby="approvals">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="approvals">Customer quality approvals<Confirm id="approvals" /></h2>
+        <h2 id="approvals">Customer quality approvals</h2>
         <p>We hold quality approvals from leading aerospace and defense manufacturers, among others.</p>
       </div>
       <ul class="approvals">{approvals.map((a) => <li>{a}</li>)}</ul>
@@ -56,7 +55,7 @@ import { url } from '../../lib/url';
   <section class="section" id="documents" aria-labelledby="docs">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="docs">Supplier documents<Confirm id="docs" /></h2>
+        <h2 id="docs">Supplier documents</h2>
         <p>Referenced on our quotations and purchase orders.</p>
       </div>
       <ul class="docs">
