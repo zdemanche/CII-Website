@@ -11,7 +11,6 @@ const legacy = programs.flatMap((g) => g.legacy ?? []);
   <SectionNav label="Markets" links={marketLinks} />
   <section class="section section--paper">
     <div class="wrap">
-      <p class="lede">Military and commercial programs, fixed-wing and rotorcraft.</p>
       <div class="prog">
         {programs.map((g) => (
           <section aria-labelledby={`g-${g.group}`}>
