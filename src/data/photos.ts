@@ -16,7 +16,6 @@ const alt: Record<string, string> = {
   'bar-stock': 'Racks of metal bar stock ready for forging',
   team: 'Consolidated Industries team outside the Cheshire, Connecticut plant',
   'shop-presses': 'Row of blue forging presses inside the plant',
-  'aiac-group': 'Facilities of the AIAC Aerospace and Special Metals Group companies',
   'plaque-aia': 'Aerospace Industries Association membership plaque',
   'plaque-fia': 'Forging Industry Association membership plaque',
   'plaque-madeinct': 'Made in CT program certificate',

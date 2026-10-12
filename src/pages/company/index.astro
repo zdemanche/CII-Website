@@ -24,7 +24,6 @@ import { companyLinks } from '../../data/sections';
         <p>We are a member of the {company.group}, alongside these companies.</p>
       </div>
       <div>
-      <Photo slug="aiac-group" class="sis__photo" sizes="(min-width: 52rem) 55vw, 100vw" />
       <ul class="sis">
         {sisterCompanies.map((s) => (
           <li>
@@ -66,7 +65,6 @@ import { companyLinks } from '../../data/sections';
   .sis p { color: var(--ink-2); font-size: var(--t-sm); }
   .mem li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); display: grid; gap: var(--s-1); }
   .mem span { color: var(--ink-2); font-size: var(--t-sm); }
-  :global(.sis__photo) { margin-bottom: var(--s-5); }
   .plaques { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-3); margin-bottom: var(--s-5); }
   @media (max-width: 40rem) { .plaques { grid-template-columns: 1fr 1fr; } }
 </style>
