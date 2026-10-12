@@ -30,7 +30,7 @@ export const engineering = [
   { title: 'Forging design and redesign', body: 'We help your engineers design new forgings and redesign existing ones.' },
   { title: 'DEFORM process simulation', body: 'Deformation modeling matches the part to a forging process before tooling is cut: equipment selection, stock sizing and preform shape progressions.' },
   { title: 'Metallurgical and metal-flow analysis', body: 'Grain-flow and microstructure studies confirm the forging puts strength where the part is loaded.' },
-  { title: 'Laser scanning and 3-D models', body: 'Laser scanning for dimensional analysis of machined parts, and 3-D models built directly for die manufacturing.' },
+  { title: 'Laser scanning and 3-D models', body: 'We use laser scanning for dimensional analysis of machined parts and build 3-D models directly for die manufacturing.' },
 ];
 
 export const finishing = [
@@ -43,7 +43,7 @@ export const finishing = [
 /** The forging route, in order. */
 export const process = [
   { step: 'Engineer', body: 'Forging design, DEFORM simulation and die models.' },
-  { step: 'Forge', body: 'Open and closed die on hydraulic hammers and presses up to 2,500 tons.' },
+  { step: 'Forge', body: 'Open-die and closed-die forging on hydraulic hammers and presses up to 2,500 tons.' },
   { step: 'Trim', body: 'Flash removed on cold trim presses.' },
   { step: 'Heat treat', body: 'NADCAP-accredited heat treating, in house.' },
   { step: 'Inspect and test', body: 'Penetrant, magnetic particle and ultrasonic inspection; tensile, hardness and chemistry in our lab.' },

@@ -10,7 +10,7 @@ const years = new Date().getFullYear() - company.founded;
 const maxPress = Math.max(...presses.map((p) => p.tons));
 const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', 'AH-64 Apache', 'Boeing 787', 'Boeing 737', 'C-130', 'Sikorsky S-92'];
 ---
-<Base title="Home" description={`Closed-die and open-die forgings in titanium, aluminum, steel and nickel alloys for aerospace and defense. AS9100D, NADCAP heat treat and NDT. Cheshire, Connecticut, since ${company.founded}.`}>
+<Base title="Home" description={`Closed-die and open-die forgings in titanium, aluminum, steel and nickel alloys for aerospace and defense. AS9100 Rev D, NADCAP-accredited heat treating and NDT. Cheshire, Connecticut, since ${company.founded}.`}>
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__art"><GrainFlow preset="hero" animate /></div>
     <div class="wrap hero__inner">
@@ -23,7 +23,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
         </div>
       </div>
       <dl class="plate" aria-label="Shop at a glance">
-        <div><dt>Presses to</dt><dd>{maxPress.toLocaleString('en-US')} t</dd></div>
+        <div><dt>Presses to</dt><dd>{maxPress.toLocaleString('en-US')} tons</dd></div>
         <div><dt>Hammers to</dt><dd>160 kJ</dd></div>
         <div><dt>Forgings to</dt><dd>250 lb</dd></div>
         <div><dt>Forging since</dt><dd>{company.founded}</dd></div>
@@ -41,10 +41,10 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
       <div class="table-scroll">
         <table class="spec">
           <caption class="visually-hidden">Forging size limits by material</caption>
-          <thead><tr><th scope="col">Material</th><th scope="col">Equipment</th><th scope="col" class="num">Max weight</th><th scope="col" class="num">Max plan area</th></tr></thead>
+          <thead><tr><th scope="col">Material</th><th scope="col">Equipment</th><th scope="col" class="num">Max weight</th><th scope="col" class="num">Max plan-view area</th></tr></thead>
           <tbody>
             {limits.map((r) => (
-              <tr><th scope="row">{r.material}</th><td data-label="Equipment">{r.equipment}</td><td class="num" data-label="Max weight">{r.weightLb} lb</td><td class="num" data-label="Max plan area">{r.areaSqIn} in²</td></tr>
+              <tr><th scope="row">{r.material}</th><td data-label="Equipment">{r.equipment}</td><td class="num" data-label="Max weight">{r.weightLb} lb</td><td class="num" data-label="Max plan-view area">{r.areaSqIn} in²</td></tr>
             ))}
           </tbody>
         </table>
@@ -107,7 +107,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
         <div class="panel cta">
           <h3>Quote a forging</h3>
           <p>Tell us the material, size and quantity. We reply with questions or a quote, and send a secure link for any drawings.</p>
-          <a class="btn btn--primary" href={url('/contact/#rfq')}>Start a request</a>
+          <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
         </div>
         <div class="panel cta">
           <h3>Build a career in forging</h3>

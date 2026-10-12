@@ -11,9 +11,9 @@ export const markets: Market[] = [
   },
   {
     slug: 'defense', name: 'Military and defense', short: 'Forgings for ships, aircraft, vehicles and munitions',
-    summary: 'Hand, contoured and closed-die forgings for warships, fixed and rotary wing aircraft, armored vehicles and guided munitions.',
-    detail: ['Our defense work spans naval, air and ground platforms, supported by NADCAP-accredited heat treat and NDT.'],
-    examples: ['Warships', 'Fixed and rotary wing aircraft', 'Armored vehicles', 'Guided munitions'],
+    summary: 'Hand, contoured and closed-die forgings for warships, fixed- and rotary-wing aircraft, armored vehicles and guided munitions.',
+    detail: ['Our defense work spans naval, air and ground platforms, supported by NADCAP-accredited heat treating and NDT.'],
+    examples: ['Warships', 'Fixed- and rotary-wing aircraft', 'Armored vehicles', 'Guided munitions'],
   },
   {
     slug: 'turbine-engine', name: 'Turbine engine', short: 'Engine forgings for aircraft and industrial gas turbines',

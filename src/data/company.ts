@@ -24,7 +24,7 @@ export const company = {
 };
 
 export const sisterCompanies = [
-  { name: 'Lenape Forged Products Corporation', place: 'West Chester, PA', focus: 'Aluminum, titanium and steel forgings for power generation, defense, aerospace, oil & gas and chemical markets', href: 'https://www.lenapeforge.com' },
+  { name: 'Lenape Forged Products Corporation', place: 'West Chester, PA', focus: 'Aluminum, titanium and steel forgings for power generation, defense, aerospace, oil and gas and chemical markets', href: 'https://www.lenapeforge.com' },
   { name: 'Arnprior Aerospace, Inc.', place: 'Arnprior, Ontario and Chihuahua, Mexico', focus: 'Metallic products, major assemblies and structures for aircraft OEMs', href: 'https://www.arnprioraerospace.com' },
   { name: 'Arnprior Rapid Manufacturing Solutions', place: 'Rochester, NY', focus: 'Prototyping and production, plastics to metal', href: 'https://www.arnprior-rmsi.com' },
   { name: 'Arnprior Aerospace Portland', place: 'Portland, OR', focus: 'Precision-machined aerospace components' },

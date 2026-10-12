@@ -26,7 +26,7 @@ export const footerNav = [
     { href: '/quality/', label: 'Quality and certifications' },
     { href: '/company/news/', label: 'News' },
     { href: '/careers/', label: 'Careers' },
-    { href: '/contact/', label: 'Contact and RFQ' },
+    { href: '/contact/', label: 'Contact and request a quote' },
   ]},
 ];
 
