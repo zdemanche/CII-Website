@@ -9,9 +9,11 @@ on:
 permissions:
   contents: read
 
+# PR runs: a newer push supersedes the old run. main: runs queue so every merge
+# finishes and deploys in order (a cancelled run shows as unsuccessful).
 concurrency:
   group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   verify:
