@@ -2,7 +2,7 @@
 /** Launch checklist — built only for DEMO previews. Lists every fact awaiting CII confirmation. */
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { pending } from '../data/pending';
+import { pending, completed } from '../data/pending';
 export function getStaticPaths() {
   return process.env.DEMO === '1' ? [{ params: { checklist: 'launch-checklist' } }] : [];
 }
@@ -10,7 +10,7 @@ const areas = [...new Set(pending.map((p) => p.area))];
 const repo = 'https://github.com/zdemanche/CII-Website/issues/';
 ---
 <Base title="Launch checklist" description="Steps remaining before the new site goes live." noindex>
-  <PageHeader title="Launch checklist" lede={`${pending.length} steps between this preview and www.forgemetal.com. Each links to its tracking issue.`} />
+  <PageHeader title="Launch checklist" lede={`${pending.length} steps left between this preview and www.forgemetal.com. Each links to its tracking issue.`} />
   <section class="section section--paper">
     <div class="wrap">
       {areas.map((a) => (
@@ -26,6 +26,14 @@ const repo = 'https://github.com/zdemanche/CII-Website/issues/';
           </ul>
         </section>
       ))}
+      <section class="area done" aria-labelledby="a-done">
+        <h2 id="a-done">Done</h2>
+        <ul>
+          {completed.map((c) => (
+            <li><span>{c.item}</span><span class="links"><a href={`${repo}${c.issue}`} rel="noopener">Issue #{c.issue}</a></span></li>
+          ))}
+        </ul>
+      </section>
     </div>
   </section>
 </Base>
@@ -36,4 +44,6 @@ const repo = 'https://github.com/zdemanche/CII-Website/issues/';
   .area li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-5); padding: var(--s-3) 0; border-bottom: 1px solid var(--rule); }
   .area li:target { background: #fbf6ea; }
   .links { display: flex; gap: var(--s-4); font-size: var(--t-sm); white-space: nowrap; }
+  .done li span:first-child { color: var(--ink-2); }
+  .done li span:first-child::before { content: '✓ '; color: var(--ok); font-weight: 700; }
 </style>
