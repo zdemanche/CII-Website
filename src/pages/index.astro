@@ -45,7 +45,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
           <thead><tr><th scope="col">Material</th><th scope="col">Equipment</th><th scope="col" class="num">Max weight</th><th scope="col" class="num">Max plan area</th></tr></thead>
           <tbody>
             {limits.map((r) => (
-              <tr><th scope="row">{r.material}</th><td>{r.equipment}</td><td class="num">{r.weightLb} lb</td><td class="num">{r.areaSqIn} in²</td></tr>
+              <tr><th scope="row">{r.material}</th><td data-label="Equipment">{r.equipment}</td><td class="num" data-label="Max weight">{r.weightLb} lb</td><td class="num" data-label="Max plan area">{r.areaSqIn} in²</td></tr>
             ))}
           </tbody>
         </table>

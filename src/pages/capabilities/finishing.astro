@@ -5,6 +5,7 @@ import SectionNav from '../../components/SectionNav.astro';
 import Confirm from '../../components/Confirm.astro';
 import { finishing } from '../../data/capabilities';
 import { capabilityLinks } from '../../data/sections';
+import { url } from '../../lib/url';
 ---
 <Base title="Heat treat, NDT and lab" description="NADCAP-accredited heat treating, fluorescent penetrant, magnetic particle and ultrasonic inspection, and an in-house lab for tensile, hardness, chemistry and microstructure.">
   <PageHeader preset="capabilities" title="Heat treat, NDT and lab" lede="Special processes stay in house, so your forgings move from press to certification without leaving our control." />
@@ -15,18 +16,32 @@ import { capabilityLinks } from '../../data/sections';
         <section class="fin__item" aria-labelledby={`f-${f.title}`}>
           <div class="fin__head">
             <h2 id={`f-${f.title}`}>{f.title}</h2>
-            {f.nadcap && <span class="badge">NADCAP accredited{f.title === 'Nondestructive testing' && <Confirm id="nadcap-ut" />}</span>}
+            {f.nadcap
+              ? <span class="badge">NADCAP accredited{f.title === 'Nondestructive testing' && <Confirm id="nadcap-ut" />}</span>
+              : <span class="badge badge--spacer" aria-hidden="true">&nbsp;</span>}
           </div>
           <ul class="ticks">{f.items.map((i) => <li>{i}</li>)}</ul>
         </section>
       ))}
     </div>
   </section>
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Certified processes, one supplier</h2>
+        <p>Tell us about the part and the specifications it must meet, and we’ll reply with questions or a quote.</p>
+      </div>
+      <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
+    </div>
+  </section>
 </Base>
 <style>
-  .fin { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--s-7); }
+  .fin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-7); }
+  @media (max-width: 48rem) { .fin { grid-template-columns: 1fr; } }
   .fin__item { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-4); align-content: start; }
-  .fin__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s-3); }
+  .fin__head { display: grid; justify-items: start; gap: var(--s-2); }
   .fin__head h2 { font-size: var(--t-xl); }
   .badge { font-size: var(--t-xs); font-weight: 650; color: var(--temper-ink); border: 1px solid #b9c8e6; background: #eef3fb; padding: 0.15rem 0.55rem; border-radius: 2rem; font-variation-settings: var(--narrow); }
+  .badge--spacer { visibility: hidden; }
+  @media (max-width: 48rem) { .badge--spacer { display: none; } }
 </style>

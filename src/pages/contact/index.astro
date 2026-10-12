@@ -200,9 +200,9 @@ const families = materials.map((m) => m.family);
   .submit { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
   .errors { border: 2px solid var(--error); border-radius: var(--radius); padding: var(--s-4) var(--s-5); margin-bottom: var(--s-5); }
   .errors h3 { font-size: var(--t-md); color: var(--error); margin-bottom: var(--s-2); }
-  .errors ul { padding-left: 1.2rem; }
-  .errors a { color: var(--error); }
-  .done { border-top: 2px solid var(--ok); background: #eef6f1; padding: var(--s-5); display: grid; gap: var(--s-2); }
+  .errors :global(ul) { padding-left: 1.2rem; }
+  .errors :global(a) { color: var(--error); }
+  .done { border-top: 2px solid var(--ok); background: #eef6f1; padding: var(--s-5); display: grid; gap: var(--s-2); margin-top: var(--s-6); }
   .done:focus, .errors:focus { outline: none; }
   .rfq__side { display: grid; gap: var(--s-7); position: sticky; top: 7.5rem; }
   .contact { margin: 0; border-top: 2px solid var(--ink); }

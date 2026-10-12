@@ -14,9 +14,9 @@ const path = Astro.url.pathname;
     </div>
   </div>
   <div class="wrap bar">
-    <a class="bar__home" href={url('/')} aria-label={`${company.name}, home`}><Logo /></a>
+    <a class="bar__home" href={url('/')}><Logo /><span class="visually-hidden">, home</span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-btn>
-      <span class="menu-btn__icon" aria-hidden="true"></span>Menu
+      <span class="menu-btn__icon" aria-hidden="true"></span><span data-menu-label>Menu</span>
     </button>
     <nav id="site-nav" class="nav" aria-label="Main">
       <ul>
@@ -34,6 +34,8 @@ const path = Astro.url.pathname;
   btn?.addEventListener('click', () => {
     const open = btn.getAttribute('aria-expanded') !== 'true';
     btn.setAttribute('aria-expanded', String(open));
+    const label = btn.querySelector('[data-menu-label]');
+    if (label) label.textContent = open ? 'Close' : 'Menu';
     header?.toggleAttribute('data-open', open);
   });
   document.addEventListener('keydown', (e) => {
@@ -47,7 +49,7 @@ const path = Astro.url.pathname;
   .util a { color: var(--on-steel); text-decoration: none; }
   .util a:hover { text-decoration: underline; color: var(--paper); }
   .bar { display: flex; align-items: center; gap: var(--s-5); min-height: 4.25rem; }
-  .bar__home { text-decoration: none; margin-right: auto; }
+  .bar__home { text-decoration: none; margin-right: auto; display: inline-flex; }
   .nav { display: flex; align-items: center; gap: var(--s-5); }
   .nav ul { list-style: none; display: flex; gap: var(--s-1); }
   .nav ul a { display: block; padding: 0.55rem 0.75rem; color: var(--ink); text-decoration: none; font-weight: 550; font-size: var(--t-sm); border-radius: var(--radius); }

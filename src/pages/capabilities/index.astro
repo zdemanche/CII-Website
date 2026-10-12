@@ -22,8 +22,8 @@ import { url } from '../../lib/url';
           <caption class="visually-hidden">Forging and trim equipment</caption>
           <thead><tr><th scope="col">Equipment</th><th scope="col" class="num">Capacity</th></tr></thead>
           <tbody>
-            <tr><th scope="row">{hammers.kind}</th><td class="num">{hammers.range}<Confirm id="hammer-unit" /></td></tr>
-            {presses.map((p) => <tr><th scope="row">{p.kind}</th><td class="num">{p.tons.toLocaleString('en-US')} tons</td></tr>)}
+            <tr><th scope="row">{hammers.kind}</th><td class="num" data-label="Capacity">{hammers.range}<Confirm id="hammer-unit" /></td></tr>
+            {presses.map((p) => <tr><th scope="row">{p.kind}</th><td class="num" data-label="Capacity">{p.tons.toLocaleString('en-US')} tons</td></tr>)}
           </tbody>
         </table>
       </div>
@@ -42,7 +42,7 @@ import { url } from '../../lib/url';
           <caption class="visually-hidden">Maximum forging weight and plan-view area by material</caption>
           <thead><tr><th scope="col">Material</th><th scope="col">Equipment</th><th scope="col" class="num">Max weight</th><th scope="col" class="num">Max plan-view area</th></tr></thead>
           <tbody>
-            {limits.map((r) => <tr><th scope="row">{r.material}</th><td>{r.equipment}</td><td class="num">{r.weightLb} lb</td><td class="num">{r.areaSqIn} in²</td></tr>)}
+            {limits.map((r) => <tr><th scope="row">{r.material}</th><td data-label="Equipment">{r.equipment}</td><td class="num" data-label="Max weight">{r.weightLb} lb</td><td class="num" data-label="Max plan-view area">{r.areaSqIn} in²</td></tr>)}
           </tbody>
         </table>
       </div>

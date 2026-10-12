@@ -69,6 +69,7 @@ a:hover { color: var(--temper-ink); text-decoration-thickness: 2px; }
 ul, ol { margin: 0; padding: 0; }
 table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
 ::selection { background: #cfdcf3; }
+[hidden] { display: none !important; }
 
 .visually-hidden {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -116,8 +117,22 @@ table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nu
 .spec tbody th { font-weight: 600; }
 .table-scroll { overflow-x: auto; }
 @media (max-width: 40rem) {
-  .spec th, .spec td { padding: var(--s-3) var(--s-2); font-size: var(--t-sm); }
-  .spec tbody th { font-variation-settings: 'wdth' 88; }
+  .spec, .spec tbody, .spec tr, .spec th, .spec td { display: block; }
+  .spec caption { display: block; }
+  .spec thead {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+  .spec tbody tr { padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--rule-soft); }
+  .spec tbody th, .spec tbody td { padding: 0; border-bottom: 0; font-size: var(--t-sm); }
+  .spec td.num, .spec th.num, .spec thead th.num { text-align: left; white-space: normal; }
+  .spec tbody th[scope='row'] { font-size: var(--t-md); margin-bottom: var(--s-2); }
+  .spec tbody td + td, .spec tbody th + td { margin-top: var(--s-1); }
+  .spec td::before {
+    content: attr(data-label); display: block; font-size: var(--t-xs); font-weight: 650;
+    color: var(--ink-3); font-variation-settings: var(--narrow); letter-spacing: 0.01em;
+  }
+  .spec td:not([data-label])::before { content: none; }
 }
 
 /* ---------- Lists ---------- */
@@ -125,7 +140,7 @@ table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nu
 .ticks li { padding-left: 1.25rem; position: relative; }
 .ticks li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 0.6rem; height: 2px; background: var(--straw); }
 .chips { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-2); }
-.chips li { padding: 0.2rem 0.65rem; border: 1px solid var(--rule); border-radius: 2rem; font-size: var(--t-sm); background: var(--paper); }
+.chips li { padding: 0.2rem 0.65rem; border: 1px solid var(--rule); border-radius: 2rem; font-size: var(--t-sm); background: var(--paper); white-space: nowrap; }
 
 /* ---------- Grid helpers ---------- */
 .grid-2 { display: grid; gap: var(--s-6); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
@@ -141,6 +156,7 @@ table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nu
 .prose h2 { font-size: var(--t-xl); margin-top: var(--s-7); margin-bottom: var(--s-3); }
 .prose ul { padding-left: 1.25rem; margin-top: var(--s-3); }
 .prose li + li { margin-top: var(--s-2); }
+.prose ul + p, .prose p + ul { margin-top: var(--s-4); }
 
 /* ---------- Draft / confirm notes ---------- */
 .note {

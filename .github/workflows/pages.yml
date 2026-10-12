@@ -44,6 +44,8 @@ jobs:
       contents: read
       pages: write
       id-token: write
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -72,13 +74,23 @@ jobs:
     name: Lighthouse (mobile, advisory)
     needs: deploy
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
-      - uses: treosh/lighthouse-ci-action@v12
+      - name: Wait for Pages to serve the new build
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "${{ needs.deploy.outputs.page_url }}")
+            [ "$code" = "200" ] && exit 0
+            sleep 10
+          done
+          echo "::warning::Pages URL not reachable yet; Lighthouse may be skipped"
+      - name: Run Lighthouse
+        # Advisory only: scores are reported, never block the pipeline.
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/capabilities/
-            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/contact/
+            ${{ needs.deploy.outputs.page_url }}
+            ${{ needs.deploy.outputs.page_url }}capabilities/
+            ${{ needs.deploy.outputs.page_url }}contact/
           uploadArtifacts: true
           temporaryPublicStorage: true

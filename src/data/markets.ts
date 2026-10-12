@@ -18,7 +18,7 @@ export const markets: Market[] = [
   {
     slug: 'turbine-engine', name: 'Turbine engine', short: 'Forgings in nickel-base and titanium alloys',
     summary: 'Forgings for jet engines and power-generation turbines in the nickel-base and titanium alloys these applications demand.',
-    detail: ['Materials include Inconel 718, Waspaloy and Ti 6Al-4V among the grades listed on our materials page.'],
+    detail: ['Materials include Inconel 718, Waspaloy and Ti 6Al‑4V among the grades listed on our materials page.'],
     pendingCopy: true,
   },
   {
