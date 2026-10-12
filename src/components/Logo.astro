@@ -1,10 +1,11 @@
 ---
+import { Picture } from 'astro:assets';
 import logo from '../assets/cii-logo.png';
 interface Props { tone?: 'ink' | 'plate'; decorative?: boolean }
 const { tone = 'ink', decorative = false } = Astro.props;
 ---
 <span class:list={['logo', `logo--${tone}`]}>
-  <img src={logo.src} width={logo.width} height={logo.height} alt={decorative ? '' : 'Consolidated Industries, Inc.'} decoding="async" />
+  <Picture src={logo} formats={['avif', 'webp']} widths={[logo.width]} alt={decorative ? '' : 'Consolidated Industries, Inc.'} loading="eager" />
 </span>
 <style>
   .logo { display: inline-flex; align-items: center; }

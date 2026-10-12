@@ -19,7 +19,7 @@ import { BUILD_YEAR } from '../lib/env';
       <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
     </div>
     {footerNav.map((col) => (
-      <nav class="foot__col" aria-label={col.heading}>
+      <nav class="foot__col" aria-label={`${col.heading} (footer)`}>
         <h2>{col.heading}</h2>
         <ul>{col.links.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul>
       </nav>
