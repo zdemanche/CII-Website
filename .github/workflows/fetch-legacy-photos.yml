@@ -1,0 +1,32 @@
+name: Fetch legacy site photos (one-off)
+
+on:
+  push:
+    branches: [content/legacy-photos]
+    paths: [.github/workflows/fetch-legacy-photos.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download every image linked from forgemetal.com
+        run: |
+          mkdir -p legacy-photos
+          wget --recursive --level=2 --no-parent --no-directories --domains=www.forgemetal.com,forgemetal.com \
+               --accept jpg,jpeg,png,JPG,JPEG,PNG --reject-regex '.*\?.*' \
+               --directory-prefix=legacy-photos --wait=1 --random-wait --tries=2 --timeout=20 \
+               --user-agent="Mozilla/5.0 (CII website rebuild)" \
+               https://www.forgemetal.com/ || true
+          ls -la legacy-photos | head -100
+          echo "count: $(ls legacy-photos | wc -l)"
+      - name: Commit photos to this branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add legacy-photos
+          git commit -m "chore: legacy forgemetal.com images (raw download)" || echo "nothing to commit"
+          git push
