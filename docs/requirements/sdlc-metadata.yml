@@ -1,0 +1,73 @@
+sdlc:
+  project: "cii-website"
+  version: "0.1.0"
+  mode: "greenfield" # greenfield | existing
+  methodology: "agentic-sdlc"
+  model_profile: "balanced" # quality | balanced | economy
+  brief:
+    purpose: "Replace the 2016 forgemetal.com site for Consolidated Industries, Inc. (aerospace/defense forgings, Cheshire CT) with a modern static site; demo on GitHub Pages, later DNS cutover"
+    stack: "Astro static site, plain CSS design tokens, TypeScript data files, GitHub Actions + GitHub Pages"
+    users: "Aerospace/defense procurement and supplier-quality buyers, engineers, job applicants, CII leadership"
+    key_features: "RFQ form without file upload (CUI-safe), capability spec tables, certifications, markets/programs, careers, news, WCAG 2.2 AA, SEO, 301 redirect map for old .php URLs"
+  phases:
+    prepare:
+      status: "pending"
+      agents:
+        explorer: { status: "pending" }
+        claude_md: { status: "pending" }
+    define:
+      status: "pending"
+      agents:
+        source_analyst: { status: "pending" }
+        test_analyst: { status: "pending" }
+        nfr_analyst: { status: "pending" }
+        fr_author: { status: "pending" }
+        nfr_author: { status: "pending" }
+        us_author: { status: "pending" }
+        requirement_reviewer: { status: "pending" }
+    design:
+      status: "pending"
+      agents:
+        architecture_explorer: { status: "pending" }
+        decisions_explorer: { status: "pending" }
+        architecture_author: { status: "pending" }
+        component_spec_author: { status: "pending" }
+        adr_traceability_author: { status: "pending" }
+        design_reviewer: { status: "pending" }
+    develop:
+      status: "pending"
+      agents:
+        architect_planner: { status: "pending" }
+        code_author: { status: "pending" }
+        test_author: { status: "pending" }
+        implementer: { status: "pending" }
+        architect_clarifier: { status: "pending" }
+        code_reviewer: { status: "pending" }
+        reqs_sync: { status: "pending" }
+      plans: []
+    verify:
+      status: "pending"
+      agents:
+        coverage_analyst: { status: "pending" }
+        independent_code_reviewer: { status: "pending" }
+        static_dynamic_analyzer: { status: "pending" }
+        regression_tester: { status: "pending" }
+        validation_reviewer: { status: "pending" }
+    release:
+      status: "pending"
+      agents:
+        release_planner: { status: "pending" }
+        release_author: { status: "pending" }
+        release_reviewer: { status: "pending" }
+    operate:
+      status: "pending"
+      agents:
+        issue_triager: { status: "pending" }
+        dependency_monitor: { status: "pending" }
+        telemetry_monitor: { status: "pending" }
+        incident_responder: { status: "pending" }
+        feedback_loop: { status: "pending" }
+  requirement_counts:
+    functional: 0
+    nonfunctional: 0
+    user_stories: 0
