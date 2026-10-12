@@ -24,11 +24,10 @@ export const company = {
 };
 
 export const sisterCompanies = [
-  { name: 'Lenape Forged Products Corporation', place: 'West Chester, PA', focus: 'Aluminum, titanium and steel forgings for power generation, defense, aerospace, oil and gas and chemical markets', href: 'https://www.lenapeforge.com' },
-  { name: 'Arnprior Aerospace, Inc.', place: 'Arnprior, Ontario and Chihuahua, Mexico', focus: 'Metallic products, major assemblies and structures for aircraft OEMs', href: 'https://www.arnprioraerospace.com' },
-  { name: 'Arnprior Rapid Manufacturing Solutions', place: 'Rochester, NY', focus: 'Prototyping and production, plastics to metal', href: 'https://www.arnprior-rmsi.com' },
-  { name: 'Arnprior Aerospace Portland', place: 'Portland, OR', focus: 'Precision-machined aerospace components' },
-  { name: 'Arnprior Aerospace Montreal', place: 'Quebec, Canada', focus: 'Precision 5-axis machined aerospace components' },
+  { name: 'Arnprior Aerospace', place: 'Chihuahua, Mexico and Portland, Oregon', focus: 'Metallic products, major assemblies and structures, and precision-machined components for aircraft OEMs', href: 'https://www.arnprioraerospace.com' },
+  { name: 'Coating Technology, Inc.', place: 'Rochester, New York', focus: 'Protective coating and plating services', href: 'https://www.ctiroc.com' },
+  { name: 'Lenape Forged Products Corporation', place: 'West Chester, Pennsylvania', focus: 'Aluminum, titanium and steel forgings for power generation, defense, aerospace, oil and gas and chemical markets', href: 'https://www.lenapeforge.com' },
+  { name: 'Vermont Aerospace Industries, Inc.', place: 'Lyndonville, Vermont', focus: 'Precision machining, sheet metal fabrication and assembly for aerospace and defense customers', href: 'https://www.vtaerospace.com' },
 ];
 
 export const memberships = [
