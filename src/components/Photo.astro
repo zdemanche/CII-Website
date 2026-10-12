@@ -1,0 +1,17 @@
+---
+import { Picture } from 'astro:assets';
+import { photo } from '../data/photos';
+interface Props { slug: string; sizes?: string; class?: string; eager?: boolean; caption?: string }
+const { slug, sizes = '(min-width: 64rem) 33vw, 100vw', class: cls = '', eager = false, caption } = Astro.props;
+const p = photo(slug);
+const widths = [320, 480, p.src.width].filter((w, i, a) => w <= p.src.width && a.indexOf(w) === i);
+---
+<figure class:list={['photo', cls]}>
+  <Picture src={p.src} alt={p.alt} formats={['avif', 'webp']} widths={widths} sizes={sizes} loading={eager ? 'eager' : 'lazy'} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+<style>
+  .photo { margin: 0; overflow: hidden; border-radius: var(--radius); background: var(--rule-soft); }
+  .photo :global(img) { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+  figcaption { font-size: var(--t-xs); color: var(--ink-3); padding: var(--s-2) 0 0; background: var(--mill); }
+</style>

@@ -1,34 +1,34 @@
 export interface Market {
-  slug: string; name: string; short: string; summary: string; detail: string[]; examples?: string[]; 
+  slug: string; name: string; short: string; summary: string; detail: string[]; examples?: string[]; photos: string[]; 
 }
 
 export const markets: Market[] = [
   {
-    slug: 'aircraft', name: 'Aircraft and rotorcraft', short: 'Flight-safety and flight-critical forgings',
+    slug: 'aircraft', photos: ['part-uh60-rotor-link', 'part-aluminum-structural', 'part-large-titanium'], name: 'Aircraft and rotorcraft', short: 'Flight-safety and flight-critical forgings',
     summary: 'Flight-safety, flight-critical and primary forgings for fixed-wing aircraft, helicopters and unmanned aircraft — military, commercial and general aviation.',
     detail: ['We forge structural, airframe, landing gear, rotor and wheel components in titanium, aluminum, steel and nickel alloys.'],
     examples: ['Landing gear components', 'Structural and airframe fittings', 'Rotor components, including a UH-60 rotor link', 'Wheel components', 'Nozzle forgings', 'Small steel fittings'],
   },
   {
-    slug: 'defense', name: 'Military and defense', short: 'Forgings for ships, aircraft, vehicles and munitions',
+    slug: 'defense', photos: ['part-missile-aluminum', 'part-medium-steel', 'part-small-steel'], name: 'Military and defense', short: 'Forgings for ships, aircraft, vehicles and munitions',
     summary: 'Hand, contoured and closed-die forgings for warships, fixed- and rotary-wing aircraft, armored vehicles and guided munitions.',
     detail: ['Our defense work spans naval, air and ground platforms, supported by NADCAP-accredited heat treating and NDT.'],
     examples: ['Warships', 'Fixed- and rotary-wing aircraft', 'Armored vehicles', 'Guided munitions'],
   },
   {
-    slug: 'turbine-engine', name: 'Turbine engine', short: 'Engine forgings for aircraft and industrial gas turbines',
+    slug: 'turbine-engine', photos: ['part-nozzles', 'part-hastx-nozzle', 'part-vanes-nozzles'], name: 'Turbine engine', short: 'Engine forgings for aircraft and industrial gas turbines',
     summary: 'Custom forgings for engine systems in commercial and military aircraft and in industrial gas turbines.',
     detail: ['We forge turbine engine parts in stainless steel, nickel-base alloys such as Waspaloy, aluminum and titanium.'],
     examples: ['Stainless steel fuel nozzles', 'Waspaloy fittings', 'Aluminum actuators', 'Titanium blades', 'Power-generation vanes and nozzles'],
   },
   {
-    slug: 'transportation', name: 'Transportation', short: 'Wheels, impellers, pistons and connecting rods',
+    slug: 'transportation', photos: ['part-737-attach-bolt', 'part-f15-fuel-injector-valve', 'part-small-aluminum-valves'], name: 'Transportation', short: 'Wheels, impellers, pistons and connecting rods',
     summary: 'Our aircraft-grade forging engineering, combined with the process-improvement discipline the automotive industry demands.',
     detail: ['We specialize in titanium, nickel and aluminum forgings for general automotive, marine and defense transportation.'],
     examples: ['Aircraft wheels', 'Turbocharger impellers', 'High-performance pistons', 'Connecting rods', 'Aluminum valve forgings', 'Engine attach bolts in Inconel 718'],
   },
   {
-    slug: 'industrial', name: 'Industrial and commercial', short: 'Rings, discs, valve bodies, shafts and flanges',
+    slug: 'industrial', photos: ['part-magnesium', 'part-aa03', 'part-large-aluminum-valves'], name: 'Industrial and commercial', short: 'Rings, discs, valve bodies, shafts and flanges',
     summary: 'Cost-effective, highly engineered forgings for refineries, oilfield equipment, pressure vessels and heat exchangers.',
     detail: ['We have the expertise and equipment to forge simple or complex shapes, including power-generation and centrifuge components.'],
     examples: ['Closed-die forged rings', 'Discs', 'Valve bodies', 'Shafts', 'Flanges', 'Fittings', 'Magnesium forgings'],

@@ -34,18 +34,18 @@ export const engineering = [
 ];
 
 export const finishing = [
-  { title: 'Heat treating', nadcap: true, items: ['Anneal', 'Solution treat', 'Age', 'Harden', 'Normalize', 'Temper', 'Air and water quench'] },
-  { title: 'Nondestructive testing', nadcap: true, items: ['Fluorescent penetrant inspection', 'Magnetic particle inspection', 'Ultrasonic inspection'] },
-  { title: 'Laboratory', nadcap: true, items: ['Room-temperature tensile testing', 'Grain size and microstructure', 'XRF metal chemistry', 'Hardness', 'Electrical conductivity'] },
-  { title: 'Cleaning and deburring', nadcap: false, items: ['Vibratory tumbling', 'Grit blasting', 'Titanium chemical milling and etching', 'Aluminum etching', 'Stainless steel pickling'] },
+  { title: 'Heat treating', photo: 'heat-treat-line', nadcap: true, items: ['Anneal', 'Solution treat', 'Age', 'Harden', 'Normalize', 'Temper', 'Air and water quench'] },
+  { title: 'Nondestructive testing', photo: 'fpi-inspection', nadcap: true, items: ['Fluorescent penetrant inspection', 'Magnetic particle inspection', 'Ultrasonic inspection'] },
+  { title: 'Laboratory', photo: 'lab-testing', nadcap: true, items: ['Room-temperature tensile testing', 'Grain size and microstructure', 'XRF metal chemistry', 'Hardness', 'Electrical conductivity'] },
+  { title: 'Cleaning and deburring', photo: 'deburring', nadcap: false, items: ['Vibratory tumbling', 'Grit blasting', 'Titanium chemical milling and etching', 'Aluminum etching', 'Stainless steel pickling'] },
 ];
 
 /** The forging route, in order. */
 export const process = [
-  { step: 'Engineer', body: 'Forging design, DEFORM simulation and die models.' },
-  { step: 'Forge', body: 'Open-die and closed-die forging on hydraulic hammers and presses up to 2,500 tons.' },
-  { step: 'Trim', body: 'Flash removed on cold trim presses.' },
-  { step: 'Heat treat', body: 'NADCAP-accredited heat treating, in house.' },
-  { step: 'Inspect and test', body: 'Penetrant, magnetic particle and ultrasonic inspection; tensile, hardness and chemistry in our lab.' },
-  { step: 'Clean and ship', body: 'Etch, pickle, blast or tumble, then certify and ship.' },
+  { step: 'Engineer', photo: 'deform-simulation', body: 'Forging design, DEFORM simulation and die models.' },
+  { step: 'Forge', photo: 'hot-forging', body: 'Open-die and closed-die forging on hydraulic hammers and presses up to 2,500 tons.' },
+  { step: 'Trim', photo: 'hammer-cell', body: 'Flash removed on cold trim presses.' },
+  { step: 'Heat treat', photo: 'heat-treat-line', body: 'NADCAP-accredited heat treating, in house.' },
+  { step: 'Inspect and test', photo: 'fpi-inspection', body: 'Penetrant, magnetic particle and ultrasonic inspection; tensile, hardness and chemistry in our lab.' },
+  { step: 'Clean and ship', photo: 'deburring', body: 'Etch, pickle, blast or tumble, then certify and ship.' },
 ];

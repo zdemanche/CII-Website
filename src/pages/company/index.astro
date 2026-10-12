@@ -2,11 +2,12 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
+import Photo from '../../components/Photo.astro';
 import { company, sisterCompanies, memberships } from '../../data/company';
 import { companyLinks } from '../../data/sections';
 ---
 <Base title="About us" description={`${company.name} has forged ferrous, non-ferrous and exotic metals in Cheshire, Connecticut since ${company.founded}. Part of the AIAC Aerospace & Special Metals Group.`}>
-  <PageHeader preset="company" title={`Forging in Connecticut since ${company.founded}`} lede="Consolidated Industries produces high-quality forgings from ferrous, non-ferrous and exotic metals, in low or high volumes, with partial or full machining." />
+  <PageHeader photo="shop-presses" title={`Forging in Connecticut since ${company.founded}`} lede="Consolidated Industries produces high-quality forgings from ferrous, non-ferrous and exotic metals, in low or high volumes, with partial or full machining." />
   <SectionNav label="Company" links={companyLinks} />
 
   <section class="section section--paper" id="mission" aria-labelledby="mv">
@@ -22,6 +23,8 @@ import { companyLinks } from '../../data/sections';
         <h2 id="grp">Part of a larger group</h2>
         <p>We are a member of the {company.group}, alongside these companies.</p>
       </div>
+      <div>
+      <Photo slug="aiac-group" class="sis__photo" sizes="(min-width: 52rem) 55vw, 100vw" />
       <ul class="sis">
         {sisterCompanies.map((s) => (
           <li>
@@ -31,6 +34,7 @@ import { companyLinks } from '../../data/sections';
           </li>
         ))}
       </ul>
+      </div>
     </div>
   </section>
 
@@ -40,9 +44,14 @@ import { companyLinks } from '../../data/sections';
         <h2 id="mem">Industry memberships</h2>
         <p>We take part in the associations that shape forging and the defense industrial base.</p>
       </div>
+      <div>
+      <ul class="plaques">
+        {['plaque-fia', 'plaque-aia', 'plaque-fdmc', 'plaque-madeinct'].map((s) => <li><Photo slug={s} sizes="(min-width: 52rem) 14vw, 45vw" /></li>)}
+      </ul>
       <ul class="mem">
         {memberships.map((m) => <li><strong>{m.name}</strong>{m.note && <span>{m.note}</span>}</li>)}
       </ul>
+      </div>
     </div>
   </section>
 </Base>
@@ -57,4 +66,7 @@ import { companyLinks } from '../../data/sections';
   .sis p { color: var(--ink-2); font-size: var(--t-sm); }
   .mem li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); display: grid; gap: var(--s-1); }
   .mem span { color: var(--ink-2); font-size: var(--t-sm); }
+  :global(.sis__photo) { margin-bottom: var(--s-5); }
+  .plaques { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-3); margin-bottom: var(--s-5); }
+  @media (max-width: 40rem) { .plaques { grid-template-columns: 1fr 1fr; } }
 </style>

@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
+import Photo from '../../components/Photo.astro';
 import { markets, type Market } from '../../data/markets';
 import { marketLinks } from '../../data/sections';
 import { url } from '../../lib/url';
@@ -31,6 +32,9 @@ const { m } = Astro.props as { m: Market };
         </div>
       ) : null}
     </div>
+    <div class="wrap gallery">
+      {m.photos.map((slug) => <Photo slug={slug} sizes="(min-width: 48rem) 33vw, 100vw" />)}
+    </div>
   </section>
 </Base>
 <style>
@@ -38,4 +42,6 @@ const { m } = Astro.props as { m: Market };
   .market { align-items: start; }
   .market .section-head { margin-bottom: 0; }
   .next { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); }
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); margin-top: var(--s-7); }
+  @media (max-width: 48rem) { .gallery { grid-template-columns: 1fr 1fr; } }
 </style>
