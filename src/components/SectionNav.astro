@@ -5,7 +5,7 @@ const { label, links } = Astro.props;
 const path = Astro.url.pathname;
 const exact = (href: string) => path.replace(/\/$/, '') === url(href).replace(/\/$/, '');
 ---
-<nav class="secnav" aria-label={label} data-secnav>
+<nav class="secnav" aria-label={`${label} pages`} data-secnav>
   <div class="wrap"><ul data-secnav-list>
     {links.map((l) => <li><a href={url(l.href)} aria-current={exact(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
   </ul></div>
