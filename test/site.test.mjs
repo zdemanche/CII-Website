@@ -159,3 +159,20 @@ test('external links opened in new tabs use rel=noopener (NFR-003)', () => {
     }
   }
 });
+
+test('Azure Static Web Apps config: 301 per legacy URL + security headers (FR-010.3, NFR-003, ADR-0002)', () => {
+  const file = join(dist, 'staticwebapp.config.json');
+  assert.ok(existsSync(file), 'missing staticwebapp.config.json');
+  const cfg = JSON.parse(read(file));
+  const audit = readFileSync(new URL('../docs/source/legacy-site-audit.md', import.meta.url), 'utf8');
+  const legacy = audit.split('## Legacy URLs')[1].split('##')[0].match(/\/[a-z0-9-]+\.(?:php|pdf)/g);
+  assert.equal(legacy.length, 23);
+  for (const from of legacy) {
+    const r = cfg.routes.find((x) => x.route === from);
+    assert.ok(r, `staticwebapp.config.json missing route ${from}`);
+    assert.equal(r.statusCode, 301, `${from} must be 301`);
+    assert.ok(r.redirect && !r.redirect.includes('#'), `${from} redirect target must have no fragment`);
+  }
+  assert.match(cfg.globalHeaders['Strict-Transport-Security'] ?? '', /max-age=\d+/);
+  assert.equal(cfg.navigationFallback, undefined, 'navigationFallback must not be set');
+});
