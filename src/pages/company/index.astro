@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { company, sisterCompanies, memberships } from '../../data/company';
 import { companyLinks } from '../../data/sections';
 ---
@@ -15,13 +14,12 @@ import { companyLinks } from '../../data/sections';
       <div class="pol"><h2 id="mv">Mission</h2><p>{company.mission}</p></div>
       <div class="pol"><h2>Vision</h2><p>{company.vision}</p></div>
     </div>
-    <div class="wrap"><p class="small">Name, machining scope and history wording to be confirmed.<Confirm id="name" /><Confirm id="machining" /></p></div>
   </section>
 
   <section class="section" id="group" aria-labelledby="grp">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="grp">Part of a larger group<Confirm id="aiac" /></h2>
+        <h2 id="grp">Part of a larger group</h2>
         <p>We are a member of the {company.group}, alongside these companies.</p>
       </div>
       <ul class="sis">
@@ -39,7 +37,7 @@ import { companyLinks } from '../../data/sections';
   <section class="section section--paper" id="memberships" aria-labelledby="mem">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="mem">Industry memberships<Confirm id="memberships" /></h2>
+        <h2 id="mem">Industry memberships</h2>
         <p>We take part in the associations that shape forging and the defense industrial base.</p>
       </div>
       <ul class="mem">

@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { jobs, benefits, lookingFor } from '../../data/jobs';
 import { company } from '../../data/company';
 import { companyLinks } from '../../data/sections';
@@ -16,7 +15,7 @@ const subject = encodeURIComponent('Employment inquiry');
   <section class="section section--paper" aria-labelledby="open">
     <div class="wrap split">
       <div class="section-head">
-        <h2 id="open">Open positions<Confirm id="careers" /></h2>
+        <h2 id="open">Open positions</h2>
         <p>We look for people with engineering drive and forging or machining backgrounds.</p>
       </div>
       <div>
@@ -42,7 +41,7 @@ const subject = encodeURIComponent('Employment inquiry');
 
   <section class="section section--paper" aria-labelledby="eeo">
     <div class="wrap">
-      <h2 id="eeo" class="eeo-h">Equal employment opportunity<Confirm id="legal" /></h2>
+      <h2 id="eeo" class="eeo-h">Equal employment opportunity</h2>
       <p>{company.name} is an equal opportunity employer. We consider all qualified applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability, protected veteran status or any other characteristic protected by law.</p>
       <p class="small">Some positions require access to export-controlled information and may be limited to U.S. persons as defined by ITAR. <a href={url('/export-control/')}>Export control notice</a></p>
     </div>

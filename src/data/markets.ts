@@ -1,5 +1,5 @@
 export interface Market {
-  slug: string; name: string; short: string; summary: string; detail: string[]; examples?: string[]; pendingCopy?: boolean;
+  slug: string; name: string; short: string; summary: string; detail: string[]; examples?: string[]; 
 }
 
 export const markets: Market[] = [
@@ -16,16 +16,22 @@ export const markets: Market[] = [
     examples: ['Warships', 'Fixed and rotary wing aircraft', 'Armored vehicles', 'Guided munitions'],
   },
   {
-    slug: 'turbine-engine', name: 'Turbine engine', short: 'Forgings in nickel-base and titanium alloys',
-    summary: 'Forgings for jet engines and power-generation turbines in the nickel-base and titanium alloys these applications demand.',
-    detail: ['Materials include Inconel 718, Waspaloy and Ti 6Al‑4V among the grades listed on our materials page.'],
-    pendingCopy: true,
+    slug: 'turbine-engine', name: 'Turbine engine', short: 'Engine forgings for aircraft and industrial gas turbines',
+    summary: 'Custom forgings for engine systems in commercial and military aircraft and in industrial gas turbines.',
+    detail: ['We forge turbine engine parts in stainless steel, nickel-base alloys such as Waspaloy, aluminum and titanium.'],
+    examples: ['Stainless steel fuel nozzles', 'Waspaloy fittings', 'Aluminum actuators', 'Titanium blades', 'Power-generation vanes and nozzles'],
   },
   {
-    slug: 'industrial', name: 'Industrial and transportation', short: 'Power generation, centrifuges and transportation',
-    summary: 'Forgings for power generation, centrifuges, transportation and other industrial and commercial equipment.',
-    detail: ['The same equipment, materials and quality system that serve aerospace serve our industrial customers.'],
-    pendingCopy: true,
+    slug: 'transportation', name: 'Transportation', short: 'Wheels, impellers, pistons and connecting rods',
+    summary: 'Our aircraft-grade forging engineering, combined with the process-improvement discipline the automotive industry demands.',
+    detail: ['We specialize in titanium, nickel and aluminum forgings for general automotive, marine and defense transportation.'],
+    examples: ['Aircraft wheels', 'Turbocharger impellers', 'High-performance pistons', 'Connecting rods', 'Aluminum valve forgings', 'Engine attach bolts in Inconel 718'],
+  },
+  {
+    slug: 'industrial', name: 'Industrial and commercial', short: 'Rings, discs, valve bodies, shafts and flanges',
+    summary: 'Cost-effective, highly engineered forgings for refineries, oilfield equipment, pressure vessels and heat exchangers.',
+    detail: ['We have the expertise and equipment to forge simple or complex shapes, including power-generation and centrifuge components.'],
+    examples: ['Closed-die forged rings', 'Discs', 'Valve bodies', 'Shafts', 'Flanges', 'Fittings', 'Magnesium forgings'],
   },
 ];
 

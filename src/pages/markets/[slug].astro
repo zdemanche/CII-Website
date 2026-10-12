@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { markets, type Market } from '../../data/markets';
 import { marketLinks } from '../../data/sections';
 import { url } from '../../lib/url';
@@ -19,7 +18,6 @@ const { m } = Astro.props as { m: Market };
       <div class="market__copy">
         <div class="section-head">
           {m.detail.map((d) => <p>{d}</p>)}
-          {m.pendingCopy && <p class="note">Full page copy is being written with our team.<Confirm id="market-copy" /></p>}
         </div>
         <div class="next">
           <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>

@@ -9,7 +9,8 @@ export const marketLinks = [
   { href: '/markets/aircraft/', label: 'Aircraft and rotorcraft' },
   { href: '/markets/defense/', label: 'Military and defense' },
   { href: '/markets/turbine-engine/', label: 'Turbine engine' },
-  { href: '/markets/industrial/', label: 'Industrial and transportation' },
+  { href: '/markets/transportation/', label: 'Transportation' },
+  { href: '/markets/industrial/', label: 'Industrial and commercial' },
   { href: '/markets/programs/', label: 'Programs served' },
 ];
 export const companyLinks = [

@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import GrainFlow from '../components/GrainFlow.astro';
-import Confirm from '../components/Confirm.astro';
 import { company } from '../data/company';
 import { limits, process, presses } from '../data/capabilities';
 import { markets, programs } from '../data/markets';
@@ -26,7 +25,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
       <dl class="plate" aria-label="Shop at a glance">
         <div><dt>Presses to</dt><dd>{maxPress.toLocaleString('en-US')} t</dd></div>
         <div><dt>Hammers to</dt><dd>160 kJ</dd></div>
-        <div><dt>Forgings to</dt><dd>250 lb<Confirm id="max-weight" /></dd></div>
+        <div><dt>Forgings to</dt><dd>250 lb</dd></div>
         <div><dt>Forging since</dt><dd>{company.founded}</dd></div>
       </dl>
     </div>
@@ -57,7 +56,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
     <div class="wrap">
       <div class="section-head">
         <h2 id="route-title">From die design to certified part, under one roof</h2>
-        <p>Engineering, forging, heat treat, inspection and lab testing all happen in our Cheshire plant, so one team owns your part from model to shipment.<Confirm id="machining" /></p>
+        <p>Engineering, forging, heat treat, inspection and lab testing all happen in our Cheshire plant, so one team owns your part from model to shipment.</p>
       </div>
       <ol class="route">
         {process.map((s, i) => (
@@ -71,7 +70,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
     <div class="wrap">
       <div class="section-head">
         <h2 id="markets-title">Flying on the platforms you know</h2>
-        <p>Flight-safety and flight-critical forgings for military, commercial and general aviation, and for the ships, vehicles and engines that support them.</p>
+        <p>Flight-safety and flight-critical forgings for military, commercial and general aviation, plus engines, vehicles, ships and industrial equipment.</p>
       </div>
       <ul class="markets">
         {markets.map((m) => (
@@ -79,7 +78,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
         ))}
       </ul>
       <div class="programs">
-        <h3>Programs we have supplied<Confirm id="programs" /></h3>
+        <h3>Programs we have supplied</h3>
         <ul class="chips chips--steel">{featured.map((p) => <li>{p}</li>)}</ul>
         <p><a href={url('/markets/programs/')}>All {programs.reduce((n, g) => n + g.items.length, 0)} programs</a></p>
       </div>
@@ -157,7 +156,7 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
   }
   @media (max-width: 34rem) { .route { grid-template-columns: 1fr; } }
 
-  .markets { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--steel-2); border: 1px solid var(--steel-2); }
+  .markets { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--steel-2); border: 1px solid var(--steel-2); }
   .markets a { display: block; height: 100%; padding: var(--s-5); background: var(--steel); color: var(--on-steel); text-decoration: none; }
   .markets a:hover { background: var(--steel-2); }
   .markets a:hover h3 { text-decoration: underline; text-underline-offset: 0.2em; }

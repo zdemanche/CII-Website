@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
-import Confirm from '../../components/Confirm.astro';
 import { finishing } from '../../data/capabilities';
 import { capabilityLinks } from '../../data/sections';
 import { url } from '../../lib/url';
@@ -17,7 +16,7 @@ import { url } from '../../lib/url';
           <div class="fin__head">
             <h2 id={`f-${f.title}`}>{f.title}</h2>
             {f.nadcap
-              ? <span class="badge">NADCAP accredited{f.title === 'Nondestructive testing' && <Confirm id="nadcap-ut" />}</span>
+              ? <span class="badge">NADCAP accredited</span>
               : <span class="badge badge--spacer" aria-hidden="true">&nbsp;</span>}
           </div>
           <ul class="ticks">{f.items.map((i) => <li>{i}</li>)}</ul>

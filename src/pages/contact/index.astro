@@ -1,10 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import Confirm from '../../components/Confirm.astro';
 import { company } from '../../data/company';
 import { materials } from '../../data/capabilities';
-import { DEMO, RFQ_ENDPOINT } from '../../lib/env';
+import { RFQ_ENDPOINT } from '../../lib/env';
 import { url } from '../../lib/url';
 const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company.mapQuery)}`;
 const families = materials.map((m) => m.family);
@@ -18,7 +17,7 @@ const families = materials.map((m) => m.family);
         <h2 id="rfq-title">Your request</h2>
         <div class="cui" role="note">
           <strong>Do not include drawings or controlled technical data.</strong>
-          <p>This form does not accept files. Drawings and models for aerospace and defense parts may be ITAR- or EAR-controlled, so after we receive your request we send a secure transfer link for them.<Confirm id="rfq-routing" /></p>
+          <p>This form does not accept files. Drawings and models for aerospace and defense parts may be ITAR- or EAR-controlled, so after we receive your request we send a secure transfer link for them.</p>
         </div>
 
         <div class="errors" data-errors tabindex="-1" hidden>
@@ -26,7 +25,7 @@ const families = materials.map((m) => m.family);
           <ul data-error-list></ul>
         </div>
 
-        <form data-rfq novalidate method="post" action={RFQ_ENDPOINT || undefined} data-demo={DEMO || !RFQ_ENDPOINT ? 'true' : 'false'}>
+        <form data-rfq novalidate method="post" action={RFQ_ENDPOINT || undefined} data-mode={RFQ_ENDPOINT ? 'endpoint' : 'email'} data-to={company.email}>
           <fieldset>
             <legend>Contact</legend>
             <div class="row">
@@ -84,8 +83,8 @@ const families = materials.map((m) => m.family);
         <h2 id="direct">Talk to us directly</h2>
         <dl class="contact">
           <div><dt>Phone</dt><dd><a href={company.phoneHref}>{company.phone}</a></dd></div>
-          <div><dt>Second line</dt><dd>{company.phoneAlt}<Confirm id="phone2" /></dd></div>
-          <div><dt>Email</dt><dd><a href={`mailto:${company.email}`}>{company.email}</a><Confirm id="email" /></dd></div>
+          <div><dt>Second line</dt><dd>{company.phoneAlt}</dd></div>
+          <div><dt>Email</dt><dd><a href={`mailto:${company.email}`}>{company.email}</a></dd></div>
         </dl>
         <div id="visit" class="visit">
           <h2>Visit</h2>
@@ -155,8 +154,7 @@ const families = materials.map((m) => m.family);
       return;
     }
     summary.hidden = true;
-    const demo = form.dataset.demo === 'true';
-    if (!demo) {
+    if (form.dataset.mode === 'endpoint') {
       try {
         const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
         if (!res.ok) throw new Error(String(res.status));
@@ -165,8 +163,15 @@ const families = materials.map((m) => m.family);
         summary.hidden = false; summary.focus();
         return;
       }
-    } else if (msg) {
-      msg.textContent = 'Preview build: your request was checked but not sent anywhere. At launch it goes straight to our sales team.';
+    } else {
+      // No server endpoint yet: hand the request to the visitor's email app, addressed to sales.
+      const data = new FormData(form);
+      const label = (name: string) => document.querySelector(`label[for="${name}"]`)?.firstChild?.textContent?.trim() ?? name;
+      const lines = [...data.entries()].filter(([, v]) => String(v).trim()).map(([k, v]) => `${label(k)}: ${v}`);
+      const subject = `Request for quote: ${data.get('company')} (${data.get('material')})`;
+      const body = `${lines.join('\n')}\n\nPlease reply with a secure transfer link for drawings.`;
+      window.location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      if (msg) msg.textContent = 'Your email app should open with the request filled in. Press send and it goes straight to our team. If nothing opened, email us at ' + form.dataset.to + '.';
     }
     form.hidden = true;
     if (done) { done.hidden = false; done.focus(); }
