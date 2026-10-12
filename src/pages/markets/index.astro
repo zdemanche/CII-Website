@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import { markets } from '../../data/markets';
+import { marketLinks } from '../../data/sections';
+import { url } from '../../lib/url';
+---
+<Base title="Markets" description="Forgings for aircraft and rotorcraft, military and defense, turbine engines, and industrial and transportation equipment.">
+  <PageHeader preset="markets" title="Markets we serve" lede="Most of what we forge flies. The rest goes to sea, drives over rough ground, or turns inside a turbine." />
+  <SectionNav label="Markets" links={marketLinks} />
+  <section class="section section--paper">
+    <div class="wrap mk">
+      {markets.map((m) => (
+        <article class="mk__item">
+          <h2><a href={url(`/markets/${m.slug}/`)}>{m.name}</a></h2>
+          <p>{m.summary}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+<style>
+  .mk { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--s-7); }
+  .mk__item { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-3); }
+  .mk__item h2 { font-size: var(--t-xl); }
+  .mk__item h2 a { color: var(--ink); text-decoration: none; }
+  .mk__item h2 a:hover { color: var(--temper); text-decoration: underline; }
+  .mk__item p { color: var(--ink-2); }
+</style>

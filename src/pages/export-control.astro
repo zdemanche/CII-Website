@@ -1,0 +1,16 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { company } from '../data/company';
+import { url } from '../lib/url';
+---
+<LegalPage title="Export control notice" description="How to send drawings and technical data that may be controlled under ITAR or EAR.">
+  <h2>Technical data</h2>
+  <p>Drawings, models and specifications for aerospace and defense parts may be controlled under the International Traffic in Arms Regulations (ITAR) or the Export Administration Regulations (EAR), and may contain Controlled Unclassified Information (CUI).</p>
+  <ul>
+    <li>Do not upload, paste or email controlled technical data through this website.</li>
+    <li>Send a <a href={url('/contact/#rfq')}>request for quote</a> describing the part in general terms. We will reply with a secure transfer method for drawings.</li>
+    <li>Mark controlled documents according to your program’s requirements.</li>
+  </ul>
+  <h2>Access</h2>
+  <p>Access to export-controlled information at {company.name} is limited to authorized persons in accordance with applicable regulations.</p>
+</LegalPage>

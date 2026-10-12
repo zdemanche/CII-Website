@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import Confirm from '../../components/Confirm.astro';
+import { company, sisterCompanies, memberships } from '../../data/company';
+import { companyLinks } from '../../data/sections';
+---
+<Base title="About us" description={`${company.name} has forged ferrous, non-ferrous and exotic metals in Cheshire, Connecticut since ${company.founded}. Part of the AIAC Aerospace & Special Metals Group.`}>
+  <PageHeader preset="company" title={`Forging in Connecticut since ${company.founded}`} lede="Consolidated Industries produces high-quality forgings from ferrous, non-ferrous and exotic metals, in low or high volumes, with partial or full machining." />
+  <SectionNav label="Company" links={companyLinks} />
+
+  <section class="section section--paper" id="mission" aria-labelledby="mv">
+    <div class="wrap grid-2">
+      <div class="pol"><h2 id="mv">Mission</h2><p>{company.mission}</p></div>
+      <div class="pol"><h2>Vision</h2><p>{company.vision}</p></div>
+    </div>
+    <div class="wrap"><p class="small">Name, machining scope and history wording to be confirmed.<Confirm id="name" /><Confirm id="machining" /></p></div>
+  </section>
+
+  <section class="section" id="group" aria-labelledby="grp">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="grp">Part of a larger group<Confirm id="aiac" /></h2>
+        <p>We are a member of the {company.group}, alongside these companies.</p>
+      </div>
+      <ul class="sis">
+        {sisterCompanies.map((s) => (
+          <li>
+            <h3>{s.href ? <a href={s.href} rel="noopener" target="_blank">{s.name}<span class="visually-hidden"> (opens in a new tab)</span></a> : s.name}</h3>
+            <span class="sis__place">{s.place}</span>
+            <p>{s.focus}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--paper" id="memberships" aria-labelledby="mem">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="mem">Industry memberships<Confirm id="memberships" /></h2>
+        <p>We take part in the associations that shape forging and the defense industrial base.</p>
+      </div>
+      <ul class="mem">
+        {memberships.map((m) => <li><strong>{m.name}</strong>{m.note && <span>{m.note}</span>}</li>)}
+      </ul>
+    </div>
+  </section>
+</Base>
+<style>
+  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-3); }
+  .pol h2 { font-size: var(--t-xl); }
+  .small { margin-top: var(--s-5); font-size: var(--t-xs); color: var(--ink-3); }
+  .sis, .mem { list-style: none; border-top: 2px solid var(--ink); }
+  .sis li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); display: grid; gap: var(--s-1); }
+  .sis h3 { font-size: var(--t-md); }
+  .sis__place { font-size: var(--t-sm); color: var(--ink-3); }
+  .sis p { color: var(--ink-2); font-size: var(--t-sm); }
+  .mem li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); display: grid; gap: var(--s-1); }
+  .mem span { color: var(--ink-2); font-size: var(--t-sm); }
+</style>

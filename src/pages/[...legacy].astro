@@ -1,0 +1,25 @@
+---
+/** Meta-refresh stubs for every legacy URL (GitHub Pages cannot send 301s). Production uses `_redirects`. */
+import { redirects } from '../data/redirects';
+import { url } from '../lib/url';
+export function getStaticPaths() {
+  return Object.entries(redirects).map(([from, to]) => ({ params: { legacy: from.replace(/^\//, '') }, props: { to } }));
+}
+const target = url(Astro.props.to as string);
+const canonical = new URL(target, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page moved | Consolidated Industries</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonical} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body>
+    <h1>This page has moved</h1>
+    <p><a href={target}>Continue to the new page</a></p>
+  </body>
+</html>

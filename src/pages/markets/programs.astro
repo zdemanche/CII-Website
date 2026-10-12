@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import Confirm from '../../components/Confirm.astro';
+import { programs } from '../../data/markets';
+import { marketLinks } from '../../data/sections';
+const legacy = programs.flatMap((g) => g.legacy ?? []);
+---
+<Base title="Programs served" description="Aircraft and rotorcraft programs supplied by Consolidated Industries, including UH-60 Black Hawk, CH-53K, CH-47 Chinook, AH-64 Apache, Boeing 787 and C-130.">
+  <PageHeader preset="markets" title="Programs served" lede="Fixed-wing and rotorcraft programs, military and commercial, that have flown with our forgings." crumbs={[{ href: '/markets/', label: 'Markets' }]} />
+  <SectionNav label="Markets" links={marketLinks} />
+  <section class="section section--paper">
+    <div class="wrap">
+      <p class="lede">Program list as published on our previous site.<Confirm id="programs" /></p>
+      <div class="prog">
+        {programs.map((g) => (
+          <section aria-labelledby={`g-${g.group}`}>
+            <h2 id={`g-${g.group}`}>{g.group}</h2>
+            <ul class="chips">{g.items.map((p) => <li>{p}</li>)}</ul>
+          </section>
+        ))}
+      </div>
+      <p class="legacy">Earlier programs: {legacy.join(', ')}.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .prog { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--s-7); margin-top: var(--s-6); }
+  .prog section { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-4); align-content: start; }
+  .prog h2 { font-size: var(--t-xl); }
+  .legacy { margin-top: var(--s-7); color: var(--ink-3); font-size: var(--t-sm); }
+</style>

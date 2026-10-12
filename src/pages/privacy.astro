@@ -1,0 +1,17 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { company } from '../data/company';
+---
+<LegalPage title="Privacy policy" description={`How ${company.name} collects and uses information submitted through this website.`}>
+  <h2>What we collect</h2>
+  <p>When you send a request for quote we collect the details you enter: name, company, work email, phone, and the part information you choose to share. We do not ask for, and you should not send, drawings or other technical data through this site.</p>
+  <h2>How we use it</h2>
+  <ul><li>To respond to your request and follow up on a quotation.</li><li>To keep a record of quotations as required by our quality system.</li></ul>
+  <p>We do not sell your information or use it for third-party advertising.</p>
+  <h2>Cookies and analytics</h2>
+  <p>This site does not set advertising cookies. Any analytics we add will be disclosed here before it is turned on.</p>
+  <h2>Retention</h2>
+  <p>We keep request records for as long as needed for business and quality-system records, then delete them.</p>
+  <h2>Contact</h2>
+  <p>Questions about this policy: <a href={`mailto:${company.email}`}>{company.email}</a>, {company.street}, {company.city}, {company.region} {company.postal}.</p>
+</LegalPage>

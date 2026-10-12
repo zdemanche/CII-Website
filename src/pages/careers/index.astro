@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Confirm from '../../components/Confirm.astro';
+import { jobs, benefits, lookingFor } from '../../data/jobs';
+import { company } from '../../data/company';
+import { url } from '../../lib/url';
+const subject = encodeURIComponent('Employment inquiry');
+---
+<Base title="Careers" description="Careers in forging, heat treat, inspection and engineering at Consolidated Industries in Cheshire, Connecticut.">
+  <PageHeader preset="careers" title="Careers" lede="Join a team that has forged flight-critical parts in Cheshire, Connecticut since 1948." />
+
+  <section class="section section--paper" aria-labelledby="open">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="open">Open positions<Confirm id="careers" /></h2>
+        <p>We look for people with engineering drive and forging or machining backgrounds.</p>
+      </div>
+      <div>
+        {jobs.length === 0 ? (
+          <div class="empty">
+            <h3>No openings are posted right now</h3>
+            <p>We still want to hear from experienced people. Send your background and the kind of work you’re looking for, and we’ll keep it on file.</p>
+            <a class="btn btn--primary" href={`mailto:${company.email}?subject=${subject}`}>Email us about a role</a>
+          </div>
+        ) : (
+          <ul class="jobs">{jobs.map((j) => <li><h3>{j.title}</h3><span>{j.type}</span><p>{j.summary}</p></li>)}</ul>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="why">
+    <div class="wrap grid-2">
+      <div class="pol"><h2 id="why">What we offer</h2><ul class="ticks">{benefits.map((b) => <li>{b}</li>)}</ul></div>
+      <div class="pol"><h2>Who we look for</h2><ul class="ticks">{lookingFor.map((b) => <li>{b}</li>)}</ul></div>
+    </div>
+  </section>
+
+  <section class="section section--paper" aria-labelledby="eeo">
+    <div class="wrap">
+      <h2 id="eeo" class="eeo-h">Equal employment opportunity<Confirm id="legal" /></h2>
+      <p>{company.name} is an equal opportunity employer. We consider all qualified applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability, protected veteran status or any other characteristic protected by law.</p>
+      <p class="small">Some positions require access to export-controlled information and may be limited to U.S. persons as defined by ITAR. <a href={url('/export-control/')}>Export control notice</a></p>
+    </div>
+  </section>
+</Base>
+<style>
+  .empty { border-top: 2px solid var(--ink); padding-top: var(--s-5); display: grid; gap: var(--s-4); justify-items: start; }
+  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-4); }
+  .pol h2, .eeo-h { font-size: var(--t-xl); margin-bottom: var(--s-3); }
+  .small { margin-top: var(--s-4); font-size: var(--t-sm); color: var(--ink-2); }
+  .jobs { list-style: none; border-top: 2px solid var(--ink); }
+  .jobs li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); }
+</style>

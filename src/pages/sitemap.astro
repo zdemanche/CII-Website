@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { footerNav, legalNav } from '../data/nav';
+import { url } from '../lib/url';
+---
+<Base title="Sitemap" description="Every page on the Consolidated Industries website.">
+  <PageHeader title="Sitemap" />
+  <section class="section section--paper">
+    <div class="wrap grid-3">
+      <div><h2>Home</h2><ul class="ticks"><li><a href={url('/')}>Home</a></li><li><a href={url('/contact/')}>Request a quote</a></li></ul></div>
+      {footerNav.map((c) => <div><h2>{c.heading}</h2><ul class="ticks">{c.links.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul></div>)}
+      <div><h2>Legal</h2><ul class="ticks">{legalNav.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul></div>
+    </div>
+  </section>
+</Base>
+<style>h2 { font-size: var(--t-lg); margin-bottom: var(--s-4); }</style>

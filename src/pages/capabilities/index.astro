@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import Confirm from '../../components/Confirm.astro';
+import { presses, hammers, limits } from '../../data/capabilities';
+import { capabilityLinks } from '../../data/sections';
+import { url } from '../../lib/url';
+---
+<Base title="Forging capabilities" description="Hydraulic presses to 2,500 tons, programmable hydraulic hammers to 160 kJ, open and closed die forgings up to 250 lb in steel, titanium, nickel, copper and aluminum alloys.">
+  <PageHeader preset="capabilities" title="Forging capabilities" lede="Open and closed (impression) die forgings on programmable hydraulic hammers and presses up to 2,500 tons, in low or high volumes." />
+  <SectionNav label="Capabilities" links={capabilityLinks} />
+
+  <section class="section section--paper" aria-labelledby="eq">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="eq">Equipment</h2>
+        <p>Hammers handle steels, nickel alloys and titanium; presses handle aluminum and copper-base alloys. Cold trim presses remove flash after forging.<Confirm id="equipment" /></p>
+      </div>
+      <div class="table-scroll">
+        <table class="spec">
+          <caption class="visually-hidden">Forging and trim equipment</caption>
+          <thead><tr><th scope="col">Equipment</th><th scope="col" class="num">Capacity</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">{hammers.kind}</th><td class="num">{hammers.range}<Confirm id="hammer-unit" /></td></tr>
+            {presses.map((p) => <tr><th scope="row">{p.kind}</th><td class="num">{p.tons.toLocaleString('en-US')} tons</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="lim">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="lim">Size limits by material<Confirm id="max-weight" /></h2>
+        <p>Plan-view area is the footprint of the forging seen from above the die. Parts near a limit are often still possible: send us the envelope and we will check.</p>
+        <p><a href={url('/contact/#rfq')}>Ask about a part</a></p>
+      </div>
+      <div class="table-scroll">
+        <table class="spec">
+          <caption class="visually-hidden">Maximum forging weight and plan-view area by material</caption>
+          <thead><tr><th scope="col">Material</th><th scope="col">Equipment</th><th scope="col" class="num">Max weight</th><th scope="col" class="num">Max plan-view area</th></tr></thead>
+          <tbody>
+            {limits.map((r) => <tr><th scope="row">{r.material}</th><td>{r.equipment}</td><td class="num">{r.weightLb} lb</td><td class="num">{r.areaSqIn} in²</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper" aria-labelledby="more">
+    <div class="wrap">
+      <h2 id="more" class="visually-hidden">More capabilities</h2>
+      <div class="grid-3">
+        <a class="panel linkcard" href={url('/capabilities/materials/')}><h3>Materials</h3><p>Titanium, aluminum, nickel-base alloys, stainless, alloy and carbon steels, and more.</p></a>
+        <a class="panel linkcard" href={url('/capabilities/engineering/')}><h3>Engineering</h3><p>Forging design, DEFORM simulation, metallurgical analysis and die models.</p></a>
+        <a class="panel linkcard" href={url('/capabilities/finishing/')}><h3>Heat treat, NDT and lab</h3><p>NADCAP-accredited heat treating and inspection, with an in-house test lab.</p></a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .linkcard { color: var(--ink); text-decoration: none; display: grid; gap: var(--s-2); border-top: 2px solid var(--ink); }
+  .linkcard:hover h3 { color: var(--temper); text-decoration: underline; text-underline-offset: 0.2em; }
+  .linkcard p { color: var(--ink-2); font-size: var(--t-sm); }
+</style>

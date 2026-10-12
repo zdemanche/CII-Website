@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Confirm from '../../components/Confirm.astro';
+import { certifications, approvals, documents } from '../../data/quality';
+import { company } from '../../data/company';
+import { url } from '../../lib/url';
+---
+<Base title="Quality and certifications" description="AS9100 Rev D and ISO 9001:2015 registered; NADCAP-accredited heat treating and nondestructive testing; Boeing D6-82479 and BMS 7-247; customer quality approvals.">
+  <PageHeader preset="quality" title="Quality and certifications" lede="Registered to AS9100 Rev D, with NADCAP accreditation for the special processes we run in house." />
+
+  <section class="section section--paper" aria-labelledby="certs">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="certs">Certifications<Confirm id="certs" /></h2>
+        <p>Current certificates are available on request and will be posted here for download.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="spec">
+          <caption class="visually-hidden">Certifications and accreditations</caption>
+          <thead><tr><th scope="col">Certification</th><th scope="col">Scope</th><th scope="col">Issued by</th></tr></thead>
+          <tbody>
+            {certifications.map((c) => (
+              <tr><th scope="row">{c.name}{c.name.includes('Nondestructive') && <Confirm id="nadcap-ut" />}</th><td>{c.scope}</td><td>{c.issuer}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="small">We also meet most MIL and NAS specifications.<Confirm id="specs" /></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="approvals">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="approvals">Customer quality approvals<Confirm id="approvals" /></h2>
+        <p>We hold quality approvals from leading aerospace and defense manufacturers, among others.</p>
+      </div>
+      <ul class="approvals">{approvals.map((a) => <li>{a}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="section section--paper" id="improvement" aria-labelledby="policy">
+    <div class="wrap grid-2">
+      <div class="pol">
+        <h2 id="policy">Quality policy</h2>
+        <p>{company.qualityPolicy}</p>
+      </div>
+      <div class="pol">
+        <h2>Safety policy</h2>
+        <p>{company.safetyPolicy}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="documents" aria-labelledby="docs">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="docs">Supplier documents<Confirm id="docs" /></h2>
+        <p>Referenced on our quotations and purchase orders.</p>
+      </div>
+      <ul class="docs">
+        {documents.map((d) => (
+          <li><strong>{d.title}</strong><span>{d.note}</span><span class="docs__state">PDF available on request — <a href={url('/contact/')}>contact us</a></span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+<style>
+  .small { margin-top: var(--s-4); font-size: var(--t-sm); color: var(--ink-2); }
+  .approvals { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); border-top: 2px solid var(--ink); }
+  .approvals li { padding: var(--s-4) var(--s-3) var(--s-4) 0; border-bottom: 1px solid var(--rule); font-weight: 650; font-size: var(--t-lg); font-variation-settings: 'wdth' 112; }
+  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-3); }
+  .pol h2 { font-size: var(--t-xl); }
+  .docs { list-style: none; border-top: 2px solid var(--ink); }
+  .docs li { display: grid; gap: var(--s-1); padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); }
+  .docs span { color: var(--ink-2); font-size: var(--t-sm); }
+  .docs__state { color: var(--ink-3) !important; }
+</style>

@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import { materials } from '../../data/capabilities';
+import { capabilityLinks } from '../../data/sections';
+import { url } from '../../lib/url';
+---
+<Base title="Materials forged" description="Forging materials: titanium, aluminum, Inconel, Waspaloy, Hastelloy, A286, PH stainless, maraging and HP 9-4-30 steels, magnesium and copper-base alloys.">
+  <PageHeader preset="capabilities" title="Materials we forge" lede="Ferrous, non-ferrous and exotic metals — from 7050 aluminum to Waspaloy." />
+  <SectionNav label="Capabilities" links={capabilityLinks} />
+  <section class="section section--paper">
+    <div class="wrap">
+      <div class="mats">
+        {materials.map((m) => (
+          <section class="mat" aria-labelledby={`m-${m.family}`}>
+            <h2 id={`m-${m.family}`}>{m.family}</h2>
+            <ul class="chips">{m.grades.map((g) => <li>{g}</li>)}</ul>
+          </section>
+        ))}
+      </div>
+      <p class="after">Don’t see your alloy? <a href={url('/contact/#rfq')}>Ask us</a> — the list reflects what we forge regularly, not everything we can.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .mats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--s-6) var(--s-7); }
+  .mat { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-4); align-content: start; }
+  .mat h2 { font-size: var(--t-xl); }
+  .after { margin-top: var(--s-7); color: var(--ink-2); }
+</style>

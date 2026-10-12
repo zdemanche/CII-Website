@@ -1,0 +1,79 @@
+---
+import Logo from './Logo.astro';
+import { mainNav } from '../data/nav';
+import { company } from '../data/company';
+import { url, isActive } from '../lib/url';
+const path = Astro.url.pathname;
+---
+<header class="site-header" data-header>
+  <div class="util">
+    <div class="wrap util__inner">
+      <span>{company.street}, {company.city}, {company.region} {company.postal}</span>
+      <a href={company.phoneHref}>{company.phone}</a>
+      <a href={`mailto:${company.email}`}>{company.email}</a>
+    </div>
+  </div>
+  <div class="wrap bar">
+    <a class="bar__home" href={url('/')} aria-label={`${company.name}, home`}><Logo /></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-btn>
+      <span class="menu-btn__icon" aria-hidden="true"></span>Menu
+    </button>
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {mainNav.map((l) => (
+          <li><a href={url(l.href)} aria-current={isActive(path, l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+      <a class="btn btn--primary nav__cta" href={url('/contact/#rfq')}>Request a quote</a>
+    </nav>
+  </div>
+</header>
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open));
+    header?.toggleAttribute('data-open', open);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header?.hasAttribute('data-open')) { btn?.click(); btn?.focus(); }
+  });
+</script>
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / 0.96); backdrop-filter: saturate(1.4) blur(8px); border-bottom: 1px solid var(--rule-soft); }
+  .util { background: var(--ink); color: var(--on-steel-2); font-size: var(--t-xs); }
+  .util__inner { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-5); padding-block: 0.4rem; justify-content: flex-end; }
+  .util a { color: var(--on-steel); text-decoration: none; }
+  .util a:hover { text-decoration: underline; color: var(--paper); }
+  .bar { display: flex; align-items: center; gap: var(--s-5); min-height: 4.25rem; }
+  .bar__home { text-decoration: none; margin-right: auto; }
+  .nav { display: flex; align-items: center; gap: var(--s-5); }
+  .nav ul { list-style: none; display: flex; gap: var(--s-1); }
+  .nav ul a { display: block; padding: 0.55rem 0.75rem; color: var(--ink); text-decoration: none; font-weight: 550; font-size: var(--t-sm); border-radius: var(--radius); }
+  .nav ul a:hover { background: var(--mill); }
+  .nav ul a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--temper); border-radius: 0; }
+  .menu-btn { display: none; }
+  @media (max-width: 26rem) { .bar { gap: var(--s-3); } }
+  @media (max-width: 62rem) {
+    .util__inner { justify-content: flex-start; }
+    .util__inner span { display: none; }
+    .menu-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; padding: 0 0.9rem;
+      font: inherit; font-weight: 600; font-size: var(--t-sm); background: none; color: var(--ink);
+      border: 1px solid var(--rule); border-radius: var(--radius); cursor: pointer;
+    }
+    .menu-btn__icon, .menu-btn__icon::before { display: block; width: 1rem; height: 2px; background: currentColor; position: relative; }
+    .menu-btn__icon::before { content: ''; position: absolute; top: 5px; }
+    .menu-btn__icon { transform: translateY(-2.5px); }
+    .nav { display: none; position: absolute; inset: 100% 0 auto 0; flex-direction: column; align-items: stretch; gap: var(--s-4);
+      background: var(--paper); border-bottom: 1px solid var(--rule); padding: var(--s-4) 1.25rem var(--s-5); }
+    .site-header[data-open] .nav { display: flex; }
+    .nav ul { flex-direction: column; }
+    .nav ul a { padding: 0.8rem 0.5rem; font-size: var(--t-md); border-bottom: 1px solid var(--rule-soft); border-radius: 0; }
+    .nav ul a[aria-current='page'] { box-shadow: inset 3px 0 0 var(--temper); }
+    .nav__cta { justify-content: center; }
+  }
+  :global(.no-js) .site-header .nav { display: flex; position: static; }
+  :global(.no-js) .menu-btn { display: none; }
+</style>

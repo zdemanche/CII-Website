@@ -1,15 +1,65 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
-// GitHub Pages demo sets SITE_URL + BASE_PATH in CI; production (forgemetal.com) uses root.
+// GitHub Pages demo sets SITE_URL + BASE_PATH (+ DEMO=1) in CI; production (forgemetal.com) uses root.
 const site = process.env.SITE_URL || 'https://www.forgemetal.com';
 const base = process.env.BASE_PATH || '/';
+
+/**
+ * Emits host-neutral production artifacts from src/data/redirects.ts:
+ *  - `_redirects`: one 301 rule per legacy URL (Netlify / Cloudflare Pages / Azure SWA-convertible format)
+ *  - `_headers`: security headers for the production host (NFR-003)
+ * GitHub Pages ignores both; the demo uses meta-refresh stubs instead.
+ */
+function hostArtifacts() {
+  return {
+    name: 'cii-host-artifacts',
+    hooks: {
+      /** @param {{ dir: URL }} args */
+      'astro:build:done': async ({ dir }) => {
+        const src = await import('./src/data/redirects.ts').catch(() => null);
+        /** @type {Record<string,string>} */
+        const map = src?.redirects ?? {};
+        const lines = Object.entries(map).map(([from, to]) => `${from}  ${to.split('#')[0]}  301`);
+        await writeFile(fileURLToPath(new URL('_redirects', dir)), `# Generated from src/data/redirects.ts\n${lines.join('\n')}\n`);
+        const csp = [
+          "default-src 'self'",
+          "img-src 'self' data:",
+          "style-src 'self' 'unsafe-inline'",
+          "script-src 'self' 'unsafe-inline'",
+          "font-src 'self'",
+          "connect-src 'self'" + (process.env.PUBLIC_RFQ_ENDPOINT ? ` ${new URL(process.env.PUBLIC_RFQ_ENDPOINT).origin}` : ''),
+          "form-action 'self'" + (process.env.PUBLIC_RFQ_ENDPOINT ? ` ${new URL(process.env.PUBLIC_RFQ_ENDPOINT).origin}` : ''),
+          "frame-ancestors 'none'",
+          "base-uri 'self'",
+        ].join('; ');
+        const headers = [
+          '/*',
+          '  Strict-Transport-Security: max-age=31536000; includeSubDomains',
+          `  Content-Security-Policy: ${csp}`,
+          '  X-Content-Type-Options: nosniff',
+          '  Referrer-Policy: strict-origin-when-cross-origin',
+          '  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()',
+          '  X-Frame-Options: DENY',
+        ];
+        await writeFile(fileURLToPath(new URL('_headers', dir)), headers.join('\n') + '\n');
+      },
+    },
+  };
+}
 
 export default defineConfig({
   site,
   base,
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
   build: { format: 'directory' },
+  integrations: [
+    sitemap({
+      filter: (page) => !/\.(php|pdf)\/?$/.test(page) && !page.includes('/launch-checklist'),
+    }),
+    hostArtifacts(),
+  ],
 });

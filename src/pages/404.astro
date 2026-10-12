@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { url } from '../lib/url';
+---
+<Base title="Page not found" description="The page you asked for isn't here." noindex>
+  <PageHeader title="That page isn’t here" lede="It may have moved when we rebuilt our site. These are the most visited pages." />
+  <section class="section section--paper">
+    <div class="wrap">
+      <ul class="ticks">
+        <li><a href={url('/capabilities/')}>Forging capabilities</a></li>
+        <li><a href={url('/quality/')}>Quality and certifications</a></li>
+        <li><a href={url('/contact/#rfq')}>Request a quote</a></li>
+        <li><a href={url('/sitemap/')}>Full sitemap</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>

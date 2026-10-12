@@ -1,0 +1,53 @@
+---
+import Logo from './Logo.astro';
+import { footerNav, legalNav } from '../data/nav';
+import { company } from '../data/company';
+import { url } from '../lib/url';
+import { BUILD_YEAR } from '../lib/env';
+---
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div class="foot__brand">
+      <Logo tone="light" />
+      <address>
+        {company.name}<br />
+        {company.street}<br />
+        {company.city}, {company.region} {company.postal}<br />
+        <a href={company.phoneHref}>{company.phone}</a><br />
+        <a href={`mailto:${company.email}`}>{company.email}</a>
+      </address>
+      <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
+    </div>
+    {footerNav.map((col) => (
+      <nav class="foot__col" aria-label={col.heading}>
+        <h2>{col.heading}</h2>
+        <ul>{col.links.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul>
+      </nav>
+    ))}
+  </div>
+  <div class="wrap foot__export">
+    <p>Drawings and technical data for aerospace and defense parts may be controlled under ITAR or EAR. Never send them through this website or by ordinary email. <a href={url('/export-control/')}>Export control notice</a>.</p>
+  </div>
+  <div class="wrap foot__legal">
+    <p>© {BUILD_YEAR} {company.name} A member of the {company.group}.</p>
+    <ul>{legalNav.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul>
+  </div>
+</footer>
+<style>
+  .site-footer { background: var(--steel); color: var(--on-steel-2); font-size: var(--t-sm); }
+  .site-footer a { color: var(--on-steel); text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; color: var(--paper); }
+  .foot { display: grid; gap: var(--s-6); grid-template-columns: 1.4fr repeat(3, 1fr); padding-block: var(--s-8) var(--s-6); }
+  .foot__brand { display: grid; gap: var(--s-4); align-content: start; justify-items: start; }
+  .foot__brand .btn { color: var(--paper); }
+  address { font-style: normal; line-height: 1.7; }
+  .foot__col h2 { font-size: var(--t-sm); font-variation-settings: 'wdth' 110; color: var(--on-steel); margin-bottom: var(--s-3); }
+  .foot__col ul { list-style: none; display: grid; gap: var(--s-2); }
+  .foot__export { border-top: 1px solid var(--steel-2); padding-block: var(--s-5); }
+  .foot__export p { max-width: 62rem; }
+  .foot__export a { text-decoration: underline; }
+  .foot__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-3); border-top: 1px solid var(--steel-2); padding-block: var(--s-5); font-size: var(--t-xs); }
+  .foot__legal ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-5); }
+  @media (max-width: 56rem) { .foot { grid-template-columns: 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } }
+  @media (max-width: 30rem) { .foot { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import Confirm from '../../components/Confirm.astro';
+import { news } from '../../data/news';
+import { companyLinks } from '../../data/sections';
+const sorted = [...news].sort((a, b) => b.date.localeCompare(a.date));
+const fmt = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+<Base title="News" description="News from Consolidated Industries, Inc.">
+  <PageHeader preset="company" title="News" crumbs={[{ href: '/company/', label: 'Company' }]} />
+  <SectionNav label="Company" links={companyLinks} />
+  <section class="section section--paper">
+    <div class="wrap">
+      <p class="note">News updates resume with the launch of this site. Earlier items are kept below as an archive.<Confirm id="news" /></p>
+      {sorted.length === 0 ? <p>No news yet.</p> : (
+        <ol class="news">
+          {sorted.map((n) => (
+            <li>
+              <time datetime={n.date}>{fmt(n.date)}</time>
+              <div>
+                <h2>{n.title}</h2>
+                <p><span class="news__place">{n.place}.</span> {n.body}</p>
+                {n.href && <p><a href={n.href} rel="noopener" target="_blank">Source<span class="visually-hidden"> (opens in a new tab)</span></a></p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .news { list-style: none; margin-top: var(--s-6); border-top: 2px solid var(--ink); }
+  .news li { display: grid; grid-template-columns: 12rem 1fr; gap: var(--s-5); padding: var(--s-5) 0; border-bottom: 1px solid var(--rule); }
+  .news time { color: var(--ink-3); font-size: var(--t-sm); font-variant-numeric: tabular-nums; }
+  .news h2 { font-size: var(--t-lg); margin-bottom: var(--s-2); }
+  .news__place { color: var(--ink-3); }
+  .news p + p { margin-top: var(--s-2); }
+  @media (max-width: 40rem) { .news li { grid-template-columns: 1fr; gap: var(--s-2); } }
+</style>

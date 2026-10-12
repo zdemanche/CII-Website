@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
+import Confirm from '../../components/Confirm.astro';
+import { markets, type Market } from '../../data/markets';
+import { marketLinks } from '../../data/sections';
+import { url } from '../../lib/url';
+export function getStaticPaths() {
+  return markets.map((m) => ({ params: { slug: m.slug }, props: { m } }));
+}
+const { m } = Astro.props as { m: Market };
+---
+<Base title={m.name} description={m.summary}>
+  <PageHeader preset="markets" title={m.name} lede={m.summary} crumbs={[{ href: '/markets/', label: 'Markets' }]} />
+  <SectionNav label="Markets" links={marketLinks} />
+  <section class="section section--paper">
+    <div class="wrap split">
+      <div class="section-head">
+        {m.detail.map((d) => <p>{d}</p>)}
+        {m.pendingCopy && <p class="note">Full page copy is being written with our team.<Confirm id="market-copy" /></p>}
+      </div>
+      <div>
+        {m.examples && (
+          <>
+            <h2 class="sub">Typical applications</h2>
+            <ul class="ticks">{m.examples.map((e) => <li>{e}</li>)}</ul>
+          </>
+        )}
+        <div class="next">
+          <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
+          <a class="btn btn--ghost" href={url('/capabilities/materials/')}>Materials we forge</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .sub { font-size: var(--t-lg); margin-bottom: var(--s-4); }
+  .next { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); }
+</style>

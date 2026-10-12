@@ -1,0 +1,19 @@
+---
+import { url, isActive } from '../lib/url';
+interface Props { label: string; links: { href: string; label: string }[] }
+const { label, links } = Astro.props;
+const path = Astro.url.pathname;
+const exact = (href: string) => path.replace(/\/$/, '') === url(href).replace(/\/$/, '');
+---
+<nav class="secnav" aria-label={label}>
+  <div class="wrap"><ul>
+    {links.map((l) => <li><a href={url(l.href)} aria-current={exact(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
+  </ul></div>
+</nav>
+<style>
+  .secnav { background: var(--paper); border-bottom: 1px solid var(--rule-soft); }
+  .secnav ul { list-style: none; display: flex; gap: var(--s-1); overflow-x: auto; scrollbar-width: none; }
+  .secnav a { display: block; padding: 0.9rem 0.85rem; white-space: nowrap; color: var(--ink-2); text-decoration: none; font-size: var(--t-sm); font-weight: 550; }
+  .secnav a:hover { color: var(--ink); }
+  .secnav a[aria-current='page'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--temper); }
+</style>

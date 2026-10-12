@@ -1,0 +1,23 @@
+---
+/** Marks a fact awaiting CII confirmation. Renders only in DEMO builds. */
+import { DEMO } from '../lib/env';
+import { pendingById } from '../data/pending';
+import { url } from '../lib/url';
+interface Props { id: string }
+const p = pendingById[Astro.props.id];
+if (!p) throw new Error(`Unknown pending id: ${Astro.props.id}`);
+---
+{DEMO && (
+  <a class="confirm" href={url(`/launch-checklist/#${p.id}`)} data-confirm={p.id} title={`To confirm: ${p.item}`}>
+    <span aria-hidden="true">?</span><span class="visually-hidden">To confirm before launch: {p.item}</span>
+  </a>
+)}
+<style>
+  .confirm {
+    display: inline-grid; place-items: center; width: 1.05rem; height: 1.05rem; margin-left: 0.25rem;
+    vertical-align: 0.15em; border-radius: 50%; border: 1px dashed var(--straw);
+    color: #8a6214; font-size: 0.7rem; font-weight: 700; text-decoration: none; line-height: 1;
+    background: #fbf6ea;
+  }
+  .confirm:hover { border-style: solid; color: #6b4b0e; }
+</style>

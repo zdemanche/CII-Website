@@ -1,0 +1,13 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { company } from '../data/company';
+import { url } from '../lib/url';
+---
+<LegalPage title="Website terms" description={`Terms of use for the ${company.name} website.`}>
+  <h2>Use of this site</h2>
+  <p>This website provides general information about {company.name}. Specifications, capabilities and certifications are summaries; the governing requirements for any order are those in our quotation, purchase order and the referenced quality documents.</p>
+  <h2>Terms of sale</h2>
+  <p>Quotations and orders are governed by our Standard Terms and Conditions of Sale and supplier quality requirements, listed under <a href={url('/quality/#documents')}>supplier documents</a>.</p>
+  <h2>Intellectual property</h2>
+  <p>Content on this site belongs to {company.name} unless noted. Program and company names belong to their owners and do not imply endorsement.</p>
+</LegalPage>
