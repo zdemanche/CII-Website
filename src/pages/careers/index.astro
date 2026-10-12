@@ -1,14 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import SectionNav from '../../components/SectionNav.astro';
 import Confirm from '../../components/Confirm.astro';
 import { jobs, benefits, lookingFor } from '../../data/jobs';
 import { company } from '../../data/company';
+import { companyLinks } from '../../data/sections';
 import { url } from '../../lib/url';
 const subject = encodeURIComponent('Employment inquiry');
 ---
 <Base title="Careers" description="Careers in forging, heat treat, inspection and engineering at Consolidated Industries in Cheshire, Connecticut.">
   <PageHeader preset="careers" title="Careers" lede="Join a team that has forged flight-critical parts in Cheshire, Connecticut since 1948." />
+  <SectionNav label="Company" links={companyLinks} />
 
   <section class="section section--paper" aria-labelledby="open">
     <div class="wrap split">
@@ -47,7 +50,7 @@ const subject = encodeURIComponent('Employment inquiry');
 </Base>
 <style>
   .empty { border-top: 2px solid var(--ink); padding-top: var(--s-5); display: grid; gap: var(--s-4); justify-items: start; }
-  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-4); }
+  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-4); align-content: start; }
   .pol h2, .eeo-h { font-size: var(--t-xl); margin-bottom: var(--s-3); }
   .small { margin-top: var(--s-4); font-size: var(--t-sm); color: var(--ink-2); }
   .jobs { list-style: none; border-top: 2px solid var(--ink); }

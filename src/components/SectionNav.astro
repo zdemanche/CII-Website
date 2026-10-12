@@ -5,15 +5,40 @@ const { label, links } = Astro.props;
 const path = Astro.url.pathname;
 const exact = (href: string) => path.replace(/\/$/, '') === url(href).replace(/\/$/, '');
 ---
-<nav class="secnav" aria-label={label}>
-  <div class="wrap"><ul>
+<nav class="secnav" aria-label={label} data-secnav>
+  <div class="wrap"><ul data-secnav-list>
     {links.map((l) => <li><a href={url(l.href)} aria-current={exact(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
   </ul></div>
 </nav>
+<script>
+  document.querySelectorAll<HTMLUListElement>('[data-secnav-list]').forEach((list) => {
+    const update = () => {
+      const overflow = list.scrollWidth - list.clientWidth > 1;
+      const atEnd = list.scrollLeft + list.clientWidth >= list.scrollWidth - 1;
+      list.toggleAttribute('data-fade', overflow && !atEnd);
+    };
+    const active = list.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
+    if (active) {
+      const l = list.getBoundingClientRect();
+      const a = active.getBoundingClientRect();
+      if (a.left < l.left || a.right > l.right) {
+        // Scroll only the tab strip, never the page.
+        list.scrollLeft += a.left - l.left - (l.width - a.width) / 2;
+      }
+    }
+    update();
+    list.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  });
+</script>
 <style>
   .secnav { background: var(--paper); border-bottom: 1px solid var(--rule-soft); }
   .secnav ul { list-style: none; display: flex; gap: var(--s-1); overflow-x: auto; scrollbar-width: none; }
   .secnav a { display: block; padding: 0.9rem 0.85rem; white-space: nowrap; color: var(--ink-2); text-decoration: none; font-size: var(--t-sm); font-weight: 550; }
+  .secnav ul[data-fade] {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent);
+  }
   .secnav a:hover { color: var(--ink); }
   .secnav a[aria-current='page'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--temper); }
 </style>

@@ -21,7 +21,7 @@ import { url } from '../../lib/url';
           <thead><tr><th scope="col">Certification</th><th scope="col">Scope</th><th scope="col">Issued by</th></tr></thead>
           <tbody>
             {certifications.map((c) => (
-              <tr><th scope="row">{c.name}{c.name.includes('Nondestructive') && <Confirm id="nadcap-ut" />}</th><td>{c.scope}</td><td>{c.issuer}</td></tr>
+              <tr><th scope="row">{c.name}{c.name.includes('Nondestructive') && <Confirm id="nadcap-ut" />}</th><td data-label="Scope">{c.scope}</td><td data-label="Issued by">{c.issuer}</td></tr>
             ))}
           </tbody>
         </table>
@@ -69,9 +69,9 @@ import { url } from '../../lib/url';
 </Base>
 <style>
   .small { margin-top: var(--s-4); font-size: var(--t-sm); color: var(--ink-2); }
-  .approvals { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); border-top: 2px solid var(--ink); }
-  .approvals li { padding: var(--s-4) var(--s-3) var(--s-4) 0; border-bottom: 1px solid var(--rule); font-weight: 650; font-size: var(--t-lg); font-variation-settings: 'wdth' 112; }
-  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-3); }
+  .approvals { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); column-gap: var(--s-5); border-top: 2px solid var(--ink); }
+  .approvals li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); font-weight: 650; font-size: var(--t-lg); font-variation-settings: 'wdth' 112; }
+  .pol { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-3); align-content: start; }
   .pol h2 { font-size: var(--t-xl); }
   .docs { list-style: none; border-top: 2px solid var(--ink); }
   .docs li { display: grid; gap: var(--s-1); padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); }

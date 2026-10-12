@@ -10,7 +10,7 @@ import { url } from '../../lib/url';
   <PageHeader preset="capabilities" title="Engineering services" lede="Many of our customers bring us a part, not a forging. Our engineers help design the forging, then prove the process before steel is cut for dies." />
   <SectionNav label="Capabilities" links={capabilityLinks} />
   <section class="section section--paper">
-    <div class="wrap grid-2">
+    <div class="wrap eng-grid">
       {engineering.map((e) => (
         <div class="eng"><h2>{e.title}</h2><p>{e.body}</p></div>
       ))}
@@ -27,6 +27,8 @@ import { url } from '../../lib/url';
   </section>
 </Base>
 <style>
+  .eng-grid { display: grid; gap: var(--s-6); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 48rem) { .eng-grid { grid-template-columns: 1fr; } }
   .eng { border-top: 2px solid var(--ink); padding-top: var(--s-4); display: grid; gap: var(--s-3); align-content: start; }
   .eng h2 { font-size: var(--t-xl); }
   .eng p { color: var(--ink-2); }
