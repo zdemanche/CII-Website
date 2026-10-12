@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import { Picture } from 'astro:assets';
+import { photo } from '../../data/photos';
+const certImgs = ['cert-amtivo', 'cert-nadcap-ht', 'cert-nadcap-ndt'].map(photo);
 import { certifications, approvals, documents } from '../../data/quality';
 import { company } from '../../data/company';
 import { url } from '../../lib/url';
@@ -12,7 +15,7 @@ import { url } from '../../lib/url';
     <div class="wrap split">
       <div class="section-head">
         <h2 id="certs">Certifications</h2>
-        <p>Current certificates are available on request and will be posted here for download.</p>
+        <p>Select a certificate to view it full size.</p>
       </div>
       <div class="table-scroll">
         <table class="spec">
@@ -25,6 +28,11 @@ import { url } from '../../lib/url';
           </tbody>
         </table>
         <p class="small">We also meet most MIL and NAS specifications.</p>
+        <ul class="certimgs">
+          {certImgs.map((c) => (
+            <li><a href={c.src.src} target="_blank" rel="noopener"><Picture src={c.src} alt={c.alt} formats={['avif', 'webp']} widths={[240, c.src.width].filter((w) => w <= c.src.width)} sizes="12rem" loading="lazy" /><span>View certificate<span class="visually-hidden"> (opens in a new tab)</span></span></a></li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
@@ -76,4 +84,8 @@ import { url } from '../../lib/url';
   .docs li { display: grid; gap: var(--s-1); padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); }
   .docs span { color: var(--ink-2); font-size: var(--t-sm); }
   .docs__state { color: var(--ink-3) !important; }
+  .certimgs { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); margin-top: var(--s-5); }
+  .certimgs a { display: grid; gap: var(--s-2); font-size: var(--t-sm); text-decoration: none; }
+  .certimgs a:hover span { text-decoration: underline; }
+  .certimgs :global(img) { width: 100%; height: auto; border: 1px solid var(--rule); background: var(--paper); }
 </style>

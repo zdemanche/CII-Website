@@ -2,16 +2,18 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
+import Photo from '../../components/Photo.astro';
 import { materials } from '../../data/capabilities';
 import { capabilityLinks } from '../../data/sections';
 import { url } from '../../lib/url';
 ---
 <Base title="Materials forged" description="Forging materials: titanium, aluminum, Inconel, Waspaloy, Hastelloy, A286, PH stainless, maraging and HP 9-4-30 steels, magnesium and copper-base alloys.">
-  <PageHeader preset="capabilities" title="Materials we forge" lede="Ferrous, non-ferrous and exotic metals — from 7050 aluminum to Waspaloy." />
+  <PageHeader photo="hot-forging" title="Materials we forge" lede="Ferrous, non-ferrous and exotic metals — from 7050 aluminum to Waspaloy." />
   <SectionNav label="Capabilities" links={capabilityLinks} />
   <section class="section section--paper">
     <div class="wrap">
       <div class="mats">
+        <Photo slug="bar-stock" class="mats__photo" sizes="(min-width: 48rem) 30vw, 100vw" />
         {materials.map((m) => (
           <section class="mat" aria-labelledby={`m-${m.family}`}>
             <h2 id={`m-${m.family}`}>{m.family}</h2>

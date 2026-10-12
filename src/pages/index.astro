@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import GrainFlow from '../components/GrainFlow.astro';
+import Photo from '../components/Photo.astro';
 import { company } from '../data/company';
 import { limits, process, presses } from '../data/capabilities';
 import { markets, programs } from '../data/markets';
@@ -8,6 +9,16 @@ import { certifications } from '../data/quality';
 import { url } from '../lib/url';
 const years = new Date().getFullYear() - company.founded;
 const maxPress = Math.max(...presses.map((p) => p.tons));
+const parts = [
+  { slug: 'part-uh60-rotor-link', label: 'UH-60 Black Hawk rotor links' },
+  { slug: 'part-nozzles', label: 'Stainless steel fuel nozzles' },
+  { slug: 'part-737-attach-bolt', label: 'Boeing 737 engine attach bolts, Inconel 718' },
+  { slug: 'part-large-titanium', label: 'Large titanium forgings' },
+  { slug: 'part-f15-fuel-injector-valve', label: 'F-15 fuel injector valve bodies' },
+  { slug: 'part-aluminum-structural', label: 'Aluminum structural forgings' },
+  { slug: 'part-magnesium', label: 'Magnesium forgings' },
+  { slug: 'part-missile-aluminum', label: 'Aluminum missile forgings' },
+];
 const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', 'AH-64 Apache', 'Boeing 787', 'Boeing 737', 'C-130', 'Sikorsky S-92'];
 ---
 <Base title="Home" description={`Closed-die and open-die forgings in titanium, aluminum, steel and nickel alloys for aerospace and defense. AS9100 Rev D, NADCAP-accredited heat treating and NDT. Cheshire, Connecticut, since ${company.founded}.`}>
@@ -60,9 +71,23 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
       </div>
       <ol class="route">
         {process.map((s, i) => (
-          <li><span class="route__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{s.step}</h3><p>{s.body}</p></li>
+          <li><Photo slug={s.photo} class="route__img" sizes="(min-width: 62rem) 16vw, (min-width: 34rem) 50vw, 100vw" /><span class="route__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3>{s.step}</h3><p>{s.body}</p></li>
         ))}
       </ol>
+    </div>
+  </section>
+
+  <section class="section section--paper" aria-labelledby="parts-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="parts-title">Parts we’ve forged</h2>
+        <p>A few of the forgings that have left our Cheshire plant, from titanium rotor links to Inconel engine bolts.</p>
+      </div>
+      <ul class="parts">
+        {parts.map((p) => (
+          <li><Photo slug={p.slug} sizes="(min-width: 62rem) 25vw, 50vw" /><span>{p.label}</span></li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -144,9 +169,14 @@ const featured = ['UH-60 Black Hawk', 'CH-53K King Stallion', 'CH-47 Chinook', '
   }
 
   .route { list-style: none; display: grid; grid-template-columns: repeat(6, 1fr); border-top: 2px solid var(--ink); counter-reset: none; }
-  .route li { padding: var(--s-5) var(--s-4) 0 0; border-right: 1px solid var(--rule); padding-left: var(--s-4); }
-  .route li:first-child { padding-left: 0; }
+  .route li { padding: var(--s-5) var(--s-3) 0; border-right: 1px solid var(--rule); }
   .route li:last-child { border-right: 0; }
+  .route :global(.route__img) { margin-bottom: var(--s-3); }
+  .route :global(.route__img img) { aspect-ratio: 3 / 2; }
+  .parts { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5) var(--s-4); }
+  .parts li { display: grid; gap: var(--s-2); }
+  .parts span { font-size: var(--t-sm); color: var(--ink-2); }
+  @media (max-width: 52rem) { .parts { grid-template-columns: repeat(2, 1fr); } }
   .route__n { display: block; font-size: var(--t-xs); font-weight: 700; color: var(--temper); font-variation-settings: var(--narrow); margin-bottom: var(--s-2); }
   .route h3 { font-size: var(--t-md); margin-bottom: var(--s-2); }
   .route p { font-size: var(--t-sm); color: var(--ink-2); }

@@ -2,12 +2,13 @@
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionNav from '../../components/SectionNav.astro';
+import Photo from '../../components/Photo.astro';
 import { engineering } from '../../data/capabilities';
 import { capabilityLinks } from '../../data/sections';
 import { url } from '../../lib/url';
 ---
 <Base title="Engineering services" description="Forging design and redesign, DEFORM process simulation, metallurgical and metal-flow analysis, laser scanning and 3-D die models.">
-  <PageHeader preset="capabilities" title="Engineering services" lede="Many of our customers bring us a part, not a forging. Our engineers help design the forging, then prove the process before steel is cut for dies." />
+  <PageHeader photo="deform-simulation" title="Engineering services" lede="Many of our customers bring us a part, not a forging. Our engineers help design the forging, then prove the process before steel is cut for dies." />
   <SectionNav label="Capabilities" links={capabilityLinks} />
   <section class="section section--paper">
     <div class="wrap eng-grid">
@@ -17,12 +18,15 @@ import { url } from '../../lib/url';
     </div>
   </section>
   <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>Bring us the model</h2>
-        <p>Start with a request for quote describing the part. We’ll send a secure link for the model and drawings so controlled technical data never travels by ordinary email.</p>
+    <div class="wrap split">
+      <div>
+        <div class="section-head">
+          <h2>Bring us the model</h2>
+          <p>Start with a request for quote describing the part. We’ll send a secure link for the model and drawings so controlled technical data never travels by ordinary email.</p>
+        </div>
+        <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
       </div>
-      <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
+      <Photo slug="laser-scanning" sizes="(min-width: 52rem) 55vw, 100vw" />
     </div>
   </section>
 </Base>
