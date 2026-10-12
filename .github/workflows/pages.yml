@@ -9,19 +9,20 @@ on:
 permissions:
   contents: read
 
-# PR runs: a newer push supersedes the old run. main: runs queue so every merge
-# finishes and deploys in order (a cancelled run shows as unsuccessful).
+# PRs share one group per branch, so a newer push cancels the superseded run.
+# Every push to main gets its own group (run_id), so merges never cancel or
+# replace each other; each one builds, tests and deploys to completion.
 concurrency:
-  group: pages-${{ github.ref }}
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || format('main-{0}', github.run_id) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   verify:
     name: Check, build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -47,7 +48,7 @@ jobs:
     name: Deploy preview to GitHub Pages
     needs: verify
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       pages: write
@@ -58,8 +59,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -81,7 +82,7 @@ jobs:
   lighthouse:
     name: Lighthouse (mobile, advisory)
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Wait for Pages to serve the new build
         run: |
