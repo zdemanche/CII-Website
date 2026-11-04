@@ -1,29 +1,43 @@
 ---
 import Logo from './Logo.astro';
+import Icon from './Icon.astro';
 import { footerNav, legalNav } from '../data/nav';
 import { company } from '../data/company';
 import { url } from '../lib/url';
 import { BUILD_YEAR } from '../lib/env';
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(company.mapQuery)}`;
 ---
 <footer class="site-footer">
   <div class="wrap foot">
     <div class="foot__brand">
       <Logo tone="plate" />
-      <address>
-        {company.name}<br />
-        {company.street}<br />
-        {company.city}, {company.region} {company.postal}<br />
-        <a href={company.phoneHref}>{company.phone}</a><br />
-        <a href={`mailto:${company.email}`}>{company.email}</a>
-      </address>
-      <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote</a>
+      <h2>About us</h2>
+      <p>Since {company.founded}, {company.name} has forged high-quality parts from ferrous, non-ferrous and exotic metals for the aerospace industry, and supported them through machining, shipment and customer care. Forging is just a small part of what we offer our customers.</p>
+      <a class="btn btn--primary" href={url('/contact/#rfq')}>Request a quote<Icon name="arrow-right" class="btn__icon" /></a>
     </div>
     {footerNav.map((col) => (
       <nav class="foot__col" aria-label={`${col.heading} (footer)`}>
         <h2>{col.heading}</h2>
-        <ul>{col.links.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul>
+        <ul class="foot__links">{col.links.map((l) => <li><a href={url(l.href)}>{l.label}</a></li>)}</ul>
       </nav>
     ))}
+    <div class="foot__contact">
+      <h2>Contact</h2>
+      <address>
+        <div class="foot__ci">
+          <Icon name="pin" />
+          <a href={mapHref} rel="noopener" target="_blank">{company.street}<br />{company.city}, {company.region} {company.postal}<span class="visually-hidden"> (map, opens in a new tab)</span></a>
+        </div>
+        <div class="foot__ci">
+          <Icon name="mail" />
+          <div><span>Email us at</span><a href={`mailto:${company.email}`}>{company.email}</a></div>
+        </div>
+        <div class="foot__ci">
+          <Icon name="phone" />
+          <div><span>Phone</span><a href={company.phoneHref}>{company.phone}</a><span>Second line {company.phoneAlt}</span></div>
+        </div>
+      </address>
+    </div>
   </div>
   <div class="wrap foot__export">
     <p>Drawings and technical data for aerospace and defense parts may be controlled under ITAR or EAR. Never send them through this website or by ordinary email. <a href={url('/export-control/')}>Export control notice</a>.</p>
@@ -37,17 +51,26 @@ import { BUILD_YEAR } from '../lib/env';
   .site-footer { background: var(--steel); color: var(--on-steel-2); font-size: var(--t-sm); }
   .site-footer a { color: var(--on-steel); text-decoration: none; }
   .site-footer a:hover { text-decoration: underline; color: var(--paper); }
-  .foot { display: grid; gap: var(--s-6); grid-template-columns: 1.4fr repeat(3, 1fr); padding-block: var(--s-8) var(--s-6); }
-  .foot__brand { display: grid; gap: var(--s-4); align-content: start; justify-items: start; }
+  .foot { display: grid; gap: var(--s-6); grid-template-columns: 1.6fr repeat(3, 1fr) 1.4fr; padding-block: var(--s-8) var(--s-6); }
+  .foot__brand { display: grid; gap: var(--s-4); align-content: start; justify-items: start; padding-right: var(--s-4); }
   .foot__brand .btn { color: var(--paper); }
-  address { font-style: normal; line-height: 1.7; }
-  .foot__col h2 { font-size: var(--t-sm); font-variation-settings: 'wdth' 110; color: var(--on-steel); margin-bottom: var(--s-3); }
-  .foot__col ul { list-style: none; display: grid; gap: var(--s-2); }
+  .foot h2 { font-size: var(--t-sm); font-variation-settings: 'wdth' 110; color: var(--on-steel); margin-bottom: var(--s-3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .foot__brand h2 { margin-bottom: 0; }
+  .foot__links { list-style: none; display: grid; gap: var(--s-2); }
+  .foot__links li { display: flex; align-items: baseline; gap: 0.5rem; }
+  .foot__links li::before { content: ''; flex: none; width: 0.45rem; height: 0.45rem; border-top: 1.5px solid var(--on-steel-2); border-right: 1.5px solid var(--on-steel-2); transform: translateY(-1px) rotate(45deg); }
+  .foot__contact { background: var(--temper); color: var(--paper); padding: var(--s-5); border-radius: var(--radius); align-self: start; }
+  .foot__contact h2, .foot__contact a { color: var(--paper); }
+  address { font-style: normal; display: grid; gap: var(--s-4); }
+  .foot__ci { display: flex; gap: var(--s-3); align-items: flex-start; line-height: 1.5; }
+  .foot__ci :global(.icon) { width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; color: #cfdcf3; }
+  .foot__ci div { display: grid; }
+  .foot__ci span { color: #cfdcf3; font-size: var(--t-xs); }
   .foot__export { border-top: 1px solid var(--steel-2); padding-block: var(--s-5); }
   .foot__export p { max-width: 62rem; }
   .foot__export a { text-decoration: underline; }
   .foot__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-3); border-top: 1px solid var(--steel-2); padding-block: var(--s-5); font-size: var(--t-xs); }
   .foot__legal ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-5); }
-  @media (max-width: 56rem) { .foot { grid-template-columns: 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } }
-  @media (max-width: 30rem) { .foot { grid-template-columns: 1fr; } }
+  @media (max-width: 64rem) { .foot { grid-template-columns: 1fr 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } .foot__contact { grid-column: 1 / -1; } }
+  @media (max-width: 36rem) { .foot { grid-template-columns: 1fr; } }
 </style>

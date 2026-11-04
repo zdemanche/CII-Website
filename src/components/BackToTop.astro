@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+---
+<a class="totop" href="#main" data-totop><Icon name="arrow-up" /><span class="visually-hidden">Back to top</span></a>
+<script>
+  const link = document.querySelector<HTMLAnchorElement>('[data-totop]');
+  const main = document.getElementById('main');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  let ticking = false;
+  const update = () => { link?.toggleAttribute('data-show', window.scrollY > 600); ticking = false; };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+  link?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+    main?.focus({ preventScroll: true });
+  });
+</script>
+<style>
+  .totop { position: fixed; right: var(--s-4); bottom: var(--s-4); z-index: 40; display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem;
+    border-radius: 50%; background: var(--temper); color: var(--paper); box-shadow: 0 6px 20px rgb(23 32 43 / 0.25); transition: opacity 0.2s, transform 0.2s; }
+  .totop:hover { background: var(--temper-ink); color: var(--paper); }
+  .totop :global(.icon) { width: 1.25rem; height: 1.25rem; }
+  :global(.js) .totop:not([data-show]) { opacity: 0; transform: translateY(0.5rem); pointer-events: none; }
+</style>
