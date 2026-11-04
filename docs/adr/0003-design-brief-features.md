@@ -16,11 +16,13 @@ Adopt the mockup's structure and interaction patterns, re-implemented in plain C
 
 ## Not adopted, and why
 - Poppins, Bootstrap, jQuery, Owl Carousel, icon fonts, Google Analytics: ADR-0001 (self-hosted Archivo, no third-party requests, NFR-005).
-- Stock aircraft and rocket photography: licensing unknown; CII plant photos used instead (issue #13).
 - Mockup copy claiming ISO 9001:2008 and AS9100 Rev C: superseded by the audited AS9100 Rev D and ISO 9001:2015 in `src/data/quality.ts`.
 - "Medical" market and the "Fax" label on the second phone line: not in the audited source; omitted / kept as "Second line".
 - "Developed by" agency credit in the footer.
 
+## Photography (amended 2026-11-04)
+The legacy site's photos are 600–700 px wide (two are 1200 px banners). Stretched across a full-bleed hero or a large card they blur, which leadership rejected. The mockup's own imagery is used where a photo must be large: the two 1920 px hero slides (F-35 formation, night rocket launch), a 757×946 crop of the F-35 slide and the 700×800 daylight launch for the overlapping cards, and the 1920 px Super Hornet formation under the CTA band. **CONFIRM the licence for these images with First Light Design before DNS cutover.** CII's own photos stay wherever they render at or below native size (process route, parts grid, page headers, certificates). Rule: never place a photo where it renders wider than its pixel width; `HeroCarousel` needs ≥ 1600 px sources and `FeatureSplit` ≥ 700 px.
+
 ## Consequences
 - Tests cover the submenus (toggles wired to existing ids, parent links resolve) and the carousel controls; the axe gate stays at zero violations.
-- Hero photos are the legacy 600–1200 px images; a new plant shoot (issue #13) would sharpen the full-bleed slides.
+- A plant photo shoot (issue #13) at ≥ 2000 px would let CII's own imagery replace the mockup's stock photos in the hero and cards.
