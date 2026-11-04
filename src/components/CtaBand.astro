@@ -1,0 +1,30 @@
+---
+/** Full-bleed call-to-action band over a darkened plant photo. */
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { photo as getPhoto } from '../data/photos';
+import { url } from '../lib/url';
+interface Props { photo: string; eyebrow?: string; title: string; action: { href: string; label: string }; id: string }
+const { photo, eyebrow, title, action, id } = Astro.props;
+const p = getPhoto(photo);
+---
+<section class="band" aria-labelledby={id}>
+  <div class="band__photo"><Picture src={p.src} alt="" formats={['avif', 'webp']} widths={[800, 1600, p.src.width].filter((w, k, a) => w <= p.src.width && a.indexOf(w) === k)} sizes="100vw" /></div>
+  <div class="wrap band__inner">
+    {eyebrow && <span class="eyebrow eyebrow--light">{eyebrow}</span>}
+    <h2 id={id}>{title}</h2>
+    <div class="band__body"><slot /></div>
+    <a class="btn btn--primary" href={url(action.href)}>{action.label}<Icon name="arrow-right" class="btn__icon" /></a>
+  </div>
+</section>
+<style>
+  .band { position: relative; isolation: isolate; background: var(--steel); color: var(--on-steel); }
+  .band__photo { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+  .band__photo :global(picture), .band__photo :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .band__photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(23 32 43 / 0.94), rgb(28 38 50 / 0.86) 60%, rgb(28 38 50 / 0.7)); }
+  .band__inner { display: grid; gap: var(--s-4); justify-items: start; padding-block: var(--s-8); max-width: var(--wrap); }
+  .band h2 { color: var(--paper); max-width: 22ch; }
+  .band__body { color: var(--on-steel); font-size: var(--t-md); max-width: 62rem; }
+  .band__body :global(p) { max-width: none; }
+  .band .btn { margin-top: var(--s-2); }
+</style>

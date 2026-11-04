@@ -1,0 +1,145 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import { photo as getPhoto } from '../data/photos';
+import { url } from '../lib/url';
+import type { Slide } from '../data/home';
+interface Props { slides: Slide[]; label?: string; interval?: number }
+const { slides, label = 'Highlights', interval = 7000 } = Astro.props;
+---
+<section class="hc" aria-roledescription="carousel" aria-label={label} data-carousel data-interval={interval}>
+  <div class="hc__slides" data-slides aria-live="off">
+    {slides.map((s, i) => {
+      const p = getPhoto(s.photo);
+      const first = i === 0;
+      return (
+        <div class="hc__slide" role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`} data-slide data-active={first} aria-hidden={first ? undefined : 'true'} inert={!first}>
+          <div class="hc__photo">
+            <Picture src={p.src} alt={p.alt} formats={['avif', 'webp']} widths={[640, 1024, 1600, p.src.width].filter((w, k, a) => w <= p.src.width && a.indexOf(w) === k)} sizes="100vw" loading={first ? 'eager' : 'lazy'} fetchpriority={first ? 'high' : undefined} />
+          </div>
+          <div class="wrap hc__inner">
+            <div class="hc__copy">
+              {first ? <h1 class="hc__title">{s.title}</h1> : <h2 class="hc__title">{s.title}</h2>}
+              <p class="hc__lede">{s.body}</p>
+              <div class="hc__actions">
+                {s.actions.map((a) => (
+                  <a class:list={['btn', a.primary ? 'btn--primary' : 'btn--ghost']} href={url(a.href)}>{a.label}<Icon name="arrow-right" class="btn__icon" /></a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <div class="wrap hc__bar">
+    <div class="hc__controls" data-controls>
+      <button type="button" class="hc__btn" data-prev aria-label="Previous slide"><Icon name="chevron-left" /></button>
+      <div class="hc__dots" role="group" aria-label="Choose a slide">
+        {slides.map((_, i) => <button type="button" class="hc__dot" data-dot aria-label={`Slide ${i + 1}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
+      </div>
+      <button type="button" class="hc__btn" data-next aria-label="Next slide"><Icon name="chevron-right" /></button>
+      <button type="button" class="hc__btn hc__pause" data-pause aria-pressed="false" aria-label="Pause slide rotation"><Icon name="pause" class="hc__ico-pause" /><Icon name="play" class="hc__ico-play" /></button>
+    </div>
+    <slot name="aside" />
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('[data-slide]')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    const live = root.querySelector<HTMLElement>('[data-slides]');
+    const pauseBtn = root.querySelector<HTMLButtonElement>('[data-pause]');
+    const interval = Number(root.dataset.interval) || 7000;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    if (slides.length < 2) { root.querySelector('[data-controls]')?.setAttribute('hidden', ''); return; }
+    let i = 0, timer = 0, paused = false, hovering = false;
+
+    const show = (n: number) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => {
+        const on = k === i;
+        s.toggleAttribute('data-active', on);
+        s.toggleAttribute('inert', !on);
+        if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
+      });
+      dots.forEach((d, k) => d.setAttribute('aria-pressed', String(k === i)));
+    };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    const start = () => { stop(); if (!paused && !hovering && !document.hidden) timer = window.setInterval(() => show(i + 1), interval); };
+    const setPaused = (p: boolean) => {
+      paused = p;
+      pauseBtn?.setAttribute('aria-pressed', String(p));
+      pauseBtn?.setAttribute('aria-label', p ? 'Resume slide rotation' : 'Pause slide rotation');
+      live?.setAttribute('aria-live', p ? 'polite' : 'off');
+      root.toggleAttribute('data-paused', p);
+      if (p) stop(); else start();
+    };
+
+    root.querySelector('[data-prev]')?.addEventListener('click', () => { show(i - 1); start(); });
+    root.querySelector('[data-next]')?.addEventListener('click', () => { show(i + 1); start(); });
+    dots.forEach((d, k) => d.addEventListener('click', () => { show(k); start(); }));
+    pauseBtn?.addEventListener('click', () => setPaused(!paused));
+    root.addEventListener('mouseenter', () => { hovering = true; stop(); });
+    root.addEventListener('mouseleave', () => { hovering = false; start(); });
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', (e) => { if (!root.contains(e.relatedTarget as Node | null)) start(); });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { show(i - 1); start(); }
+      else if (e.key === 'ArrowRight') { show(i + 1); start(); }
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+    let x0: number | null = null;
+    root.addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') x0 = e.clientX; }, { passive: true });
+    root.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 48) { show(dx < 0 ? i + 1 : i - 1); start(); }
+    });
+
+    // Motion-sensitive visitors get a still hero; the play button lets them opt in.
+    setPaused(reduce.matches);
+  });
+</script>
+<style>
+  .hc { position: relative; background: var(--steel); color: var(--on-steel); isolation: isolate; }
+  .hc__slides { display: grid; }
+  .hc__slide { grid-area: 1 / 1; position: relative; display: grid; opacity: 0; visibility: hidden; transition: opacity 0.7s ease, visibility 0s 0.7s; }
+  .hc__slide[data-active] { opacity: 1; visibility: visible; transition-delay: 0s; z-index: 1; }
+  .hc__photo { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+  .hc__photo :global(picture), .hc__photo :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .hc__photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(23 32 43 / 0.92) 0%, rgb(28 38 50 / 0.8) 38%, rgb(28 38 50 / 0.25) 75%, rgb(28 38 50 / 0.15) 100%); }
+  .hc__inner { min-height: min(38rem, 78vh); display: flex; align-items: center; padding-block: var(--s-8); }
+  .hc__copy { max-width: 38rem; }
+  .hc__title { font-size: clamp(2.25rem, 1.3rem + 4vw, 4.25rem); line-height: 1.04; font-variation-settings: 'wdth' 122; letter-spacing: -0.02em; color: var(--paper); }
+  .hc__lede { margin-top: var(--s-5); font-size: var(--t-lg); line-height: 1.5; color: var(--on-steel); max-width: 34rem; }
+  .hc__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); }
+  .hc .btn--ghost { color: var(--paper); border-color: rgb(255 255 255 / 0.7); }
+  .hc .btn--ghost:hover { background: rgb(255 255 255 / 0.12); }
+
+  .hc__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4) var(--s-6); padding-block: var(--s-4) var(--s-5); position: relative; z-index: 2; }
+  .hc__controls { display: flex; align-items: center; gap: var(--s-2); }
+  .hc__btn { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    border: 1px solid rgb(232 237 242 / 0.45); background: rgb(23 32 43 / 0.5); color: var(--paper); cursor: pointer; }
+  .hc__btn:hover { background: var(--temper); border-color: var(--temper); }
+  .hc__btn :global(.icon) { width: 1.25rem; height: 1.25rem; }
+  .hc__pause { margin-left: var(--s-2); }
+  .hc__ico-play, .hc[data-paused] .hc__ico-pause { display: none; }
+  .hc[data-paused] .hc__ico-play { display: block; }
+  .hc__dots { display: flex; gap: 0.25rem; padding-inline: var(--s-2); }
+  .hc__dot { width: 1.5rem; height: 1.5rem; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+  .hc__dot::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: rgb(232 237 242 / 0.5); transition: transform 0.2s, background 0.2s; }
+  .hc__dot:hover::before { background: var(--paper); }
+  .hc__dot[aria-pressed='true']::before { background: var(--paper); transform: scale(1.35); }
+  .hc__dot:focus-visible { box-shadow: var(--focus); border-radius: 50%; }
+
+  :global(.no-js) .hc__slide:not(:first-child) { display: none; }
+  :global(.no-js) .hc__slide { opacity: 1; visibility: visible; }
+  :global(.no-js) .hc__controls { display: none; }
+  @media (max-width: 56rem) {
+    .hc__photo::after { background: linear-gradient(180deg, rgb(28 38 50 / 0.45), rgb(23 32 43 / 0.9) 70%); }
+    .hc__inner { min-height: 0; padding-block: var(--s-9) var(--s-6); align-items: end; }
+    .hc__bar { justify-content: center; }
+  }
+</style>

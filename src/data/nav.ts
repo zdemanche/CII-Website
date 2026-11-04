@@ -1,8 +1,25 @@
-export const mainNav = [
-  { href: '/capabilities/', label: 'Capabilities' },
-  { href: '/markets/', label: 'Markets' },
-  { href: '/quality/', label: 'Quality' },
-  { href: '/company/', label: 'Company' },
+import { capabilityLinks, marketLinks } from './sections';
+
+export interface NavLink { href: string; label: string }
+/** Top-level item; `children` renders as a dropdown (desktop) or accordion (phone). The parent is always a real page. */
+export interface NavItem extends NavLink { children?: NavLink[] }
+
+export const mainNav: NavItem[] = [
+  { href: '/capabilities/', label: 'Capabilities', children: capabilityLinks },
+  { href: '/markets/', label: 'Markets', children: marketLinks.filter((l) => l.href !== '/markets/') },
+  { href: '/quality/', label: 'Quality', children: [
+    { href: '/quality/#certs', label: 'Certifications' },
+    { href: '/quality/#approvals', label: 'Customer approvals' },
+    { href: '/quality/#improvement', label: 'Continuous improvement' },
+    { href: '/quality/#documents', label: 'Supplier documents' },
+  ]},
+  { href: '/company/', label: 'Company', children: [
+    { href: '/company/', label: 'About us' },
+    { href: '/company/#mission', label: 'Mission and vision' },
+    { href: '/company/#group', label: 'Related companies' },
+    { href: '/company/#memberships', label: 'Memberships' },
+    { href: '/company/news/', label: 'News' },
+  ]},
   { href: '/careers/', label: 'Careers' },
 ];
 

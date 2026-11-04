@@ -1,0 +1,37 @@
+---
+/** Photo with an overlapping, slant-edged card: the "About us" block pattern from the 2026 design brief. */
+import Photo from './Photo.astro';
+import Icon from './Icon.astro';
+import { url } from '../lib/url';
+interface Props { photo: string; eyebrow?: string; title: string; reverse?: boolean; action?: { href: string; label: string }; id: string; paper?: boolean }
+const { photo, eyebrow, title, reverse = false, action, id, paper = false } = Astro.props;
+---
+<section class:list={['feat', 'section', { 'feat--reverse': reverse, 'section--paper': paper }]} aria-labelledby={id}>
+  <div class="wrap feat__grid">
+    <Photo slug={photo} class="feat__photo" sizes="(min-width: 56rem) 60vw, 100vw" />
+    <div class="feat__card">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h2 id={id}>{title}</h2>
+      <div class="feat__body"><slot /></div>
+      {action && <a class="btn btn--primary" href={url(action.href)}>{action.label}<Icon name="arrow-right" class="btn__icon" /></a>}
+    </div>
+  </div>
+</section>
+<style>
+  .feat__grid { display: grid; grid-template-columns: repeat(12, 1fr); align-items: center; }
+  .feat :global(.feat__photo) { grid-column: 1 / 8; grid-row: 1; border-radius: var(--radius); }
+  .feat :global(.feat__photo img) { aspect-ratio: 4 / 5; }
+  .feat__card { grid-column: 7 / 13; grid-row: 1; z-index: 1; display: grid; gap: var(--s-4); justify-items: start; align-content: start;
+    margin-block: var(--s-6); padding: var(--s-7) var(--s-6) var(--s-7) calc(var(--s-6) + 2.25rem);
+    background: var(--paper); box-shadow: 0 16px 48px rgb(23 32 43 / 0.14); clip-path: polygon(2.25rem 0, 100% 0, 100% 100%, 0 100%); }
+  .feat__card h2 { max-width: 16ch; }
+  .feat__body { display: grid; gap: var(--s-4); color: var(--ink-2); }
+  .feat__card .btn { margin-top: var(--s-2); }
+  .feat--reverse :global(.feat__photo) { grid-column: 6 / 13; }
+  .feat--reverse .feat__card { grid-column: 1 / 7; padding: var(--s-7) calc(var(--s-6) + 2.25rem) var(--s-7) var(--s-6); clip-path: polygon(0 0, 100% 0, calc(100% - 2.25rem) 100%, 0 100%); }
+  @media (max-width: 56rem) {
+    .feat__grid { display: block; }
+    .feat :global(.feat__photo img) { aspect-ratio: 16 / 10; }
+    .feat__card, .feat--reverse .feat__card { margin: calc(var(--s-6) * -1) var(--s-4) 0; padding: var(--s-6) var(--s-5); clip-path: none; position: relative; }
+  }
+</style>

@@ -44,7 +44,7 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 6rem; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 6rem; scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font);
@@ -90,6 +90,14 @@ table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nu
 .section-head p { color: var(--ink-2); font-size: var(--t-lg); line-height: 1.5; }
 .section--steel .section-head p { color: var(--on-steel-2); }
 .lede { font-size: var(--t-lg); line-height: 1.5; color: var(--ink-2); }
+
+/* ---------- Eyebrow labels and arrow links ---------- */
+.eyebrow { display: inline-block; font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--temper); font-variation-settings: 'wdth' 110; }
+.eyebrow--light { color: #a9c3f0; }
+.more { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 650; font-size: var(--t-sm); text-decoration: none; }
+.more:hover { text-decoration: underline; }
+.more svg, .btn .btn__icon { width: 1.1em; height: 1.1em; flex: none; transition: transform 0.2s; }
+.more:hover svg, .btn:hover .btn__icon { transform: translateX(3px); }
 
 /* ---------- Buttons ---------- */
 .btn {

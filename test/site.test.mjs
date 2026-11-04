@@ -45,9 +45,10 @@ test('skip link and main landmark on every page (NFR-001)', () => {
 test('images have alt text; no lorem or generic alt (NFR-001)', () => {
   for (const f of pages()) {
     for (const img of read(f).match(/<img\b[^>]*>/g) || []) {
-      const alt = img.match(/alt="([^"]*)"/);
+      // Astro renders alt="" as a bare `alt` attribute (valid HTML for decorative images).
+      const alt = img.match(/\salt(?:="([^"]*)")?(?=[\s>])/);
       assert.ok(alt, `${rel(f)} img missing alt: ${img}`);
-      assert.ok(!/lorem|vestibulum|^image$|^photo$/i.test(alt[1]), `${rel(f)} bad alt "${alt[1]}"`);
+      assert.ok(!/lorem|vestibulum|^image$|^photo$/i.test(alt[1] ?? ''), `${rel(f)} bad alt "${alt[1]}"`);
     }
   }
 });
@@ -70,6 +71,24 @@ test('no placeholder "#" nav links and no Twitter link (FR-001)', () => {
     assert.ok(!/href="#"/.test(h), `${rel(f)} has href="#"`);
     assert.ok(!/twitter\.com|x\.com\//.test(h), `${rel(f)} links Twitter/X`);
   }
+});
+
+test('header submenus: real parent links, toggles wired to existing ids (FR-001.3)', () => {
+  const h = read(join(dist, 'index.html'));
+  const ids = [...h.matchAll(/aria-controls="(sub-[^"]+)"/g)].map((m) => m[1]);
+  assert.ok(ids.length >= 3, 'expected dropdown submenus in the main nav');
+  for (const id of ids) assert.ok(h.includes(`id="${id}"`), `submenu ${id} missing`);
+  for (const [, href] of h.matchAll(/<li class="nav__item[^"]*"[^>]*><a href="([^"]+)"/g)) {
+    assert.ok(resolves(href), `nav parent ${href} must be a real page`);
+  }
+});
+
+test('home: hero carousel has slide controls and a pause button (NFR-001, WCAG 2.2.2)', () => {
+  const h = read(join(dist, 'index.html'));
+  assert.match(h, /aria-roledescription="carousel"/);
+  assert.ok((h.match(/aria-roledescription="slide"/g) || []).length >= 2, 'at least two slides');
+  for (const c of ['data-prev', 'data-next', 'data-pause']) assert.ok(h.includes(c), `missing ${c} control`);
+  assert.equal((h.match(/<h1[\s>]/g) || []).length, 1, 'only the first slide carries the h1');
 });
 
 test('footer shows current year and address (FR-001)', () => {
