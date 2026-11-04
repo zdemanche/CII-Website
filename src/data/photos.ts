@@ -44,6 +44,12 @@ const alt: Record<string, string> = {
   'part-magnesium-2': 'Assorted magnesium forgings',
   'part-aa01': 'Forged valve and actuator bodies',
   'part-aa03': 'Forged steel housings with bored ends',
+  // Imagery supplied with the 2026 design brief (First Light Design mockup); licence CONFIRM, see ADR-0003.
+  'hero-f35-formation': 'Six F-35 fighter jets flying in formation above a cloud deck',
+  'hero-rocket-launch-night': 'Rocket lifting off from its launch pad at night, exhaust lighting the clouds',
+  'jet-fighter-flight': 'F-35 fighter jet seen head-on above a cloud deck, with wingmen either side',
+  'rocket-launch-day': 'Rocket lifting off from a coastal launch pad in daylight',
+  'band-hornet-formation': 'Three F/A-18 Super Hornets flying in close formation, black and white',
 };
 
 export interface Photo { src: ImageMetadata; alt: string }

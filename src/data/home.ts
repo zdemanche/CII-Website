@@ -10,10 +10,10 @@ const maxHammer = hammers.range.split(' to ').pop();
 export interface SlideAction { href: string; label: string; primary?: boolean }
 export interface Slide { photo: string; title: string; body: string; actions: SlideAction[] }
 
-/** Home hero carousel. First slide carries the page h1. */
+/** Home hero carousel. First slide carries the page h1. Photos must be >= 1600px wide: the slide is full-bleed. */
 export const slides: Slide[] = [
   {
-    photo: 'shop-presses',
+    photo: 'hero-f35-formation',
     title: `Excellence in aerospace forging for over ${decades} years`,
     body: `Precision aerospace and commercial forgings in titanium, aluminum, steel and nickel alloys. Consolidated Industries serves the global marketplace as a preferred supplier in the design, manufacture and support of high-technology forging applications, from Cheshire, Connecticut, since ${company.founded}.`,
     actions: [
@@ -22,21 +22,12 @@ export const slides: Slide[] = [
     ],
   },
   {
-    photo: 'deform-simulation',
+    photo: 'hero-rocket-launch-night',
     title: 'Innovation at work: a better process means better parts',
     body: 'We keep a rigorous culture of continuous improvement in every part of the business, from DEFORM simulation before tooling is cut to NADCAP-accredited heat treating and testing in house.',
     actions: [
       { href: '/quality/#improvement', label: 'Continuous improvement', primary: true },
       { href: '/company/', label: 'About us' },
-    ],
-  },
-  {
-    photo: 'hot-forging',
-    title: 'Forgings for parts that cannot fail',
-    body: `Open- and closed-die forgings on hammers to ${maxHammer} and presses to ${maxPress} tons, engineered, forged, heat treated and tested under one roof.`,
-    actions: [
-      { href: '/contact/#rfq', label: 'Request a quote', primary: true },
-      { href: '/capabilities/', label: 'See capabilities' },
     ],
   },
 ];
